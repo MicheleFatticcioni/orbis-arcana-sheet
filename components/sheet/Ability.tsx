@@ -17,36 +17,17 @@ export default function Ability({ data, updateSkill }: AbilityProps) {
             {["movimento", "resistenza", "rissa"].map((skill) => (
               <div key={skill} className="flex justify-between items-center">
                 <span className="text-sm capitalize">{skill}</span>
-                <input
-                  type="number"
-                  className="w-12 text-right"
-                  placeholder="0"
-                  value={data.skills[skill] || 0}
-                  onChange={(e) =>
-                    updateSkill(skill, parseInt(e.target.value) || 0)
-                  }
-                />
-              </div>
-            ))}
-          </div>
-        </div>
-
-        {/* VOL Skills */}
-        <div className="border-l-2 border-zinc-700 pl-4">
-          <h3 className="text-zinc-500 text-sm mb-2">Volontà</h3>
-          <div className="space-y-2">
-            {["empatia", "intuizione", "percezione", "rituali"].map((skill) => (
-              <div key={skill} className="flex justify-between items-center">
-                <span className="text-sm capitalize">{skill}</span>
-                <input
-                  type="number"
-                  className="w-12 text-right"
-                  placeholder="0"
-                  value={data.skills[skill] || 0}
-                  onChange={(e) =>
-                    updateSkill(skill, parseInt(e.target.value) || 0)
-                  }
-                />
+                <div className="w-12">
+                  <input
+                    type="number"
+                    className="w-12 text-right"
+                    placeholder="0"
+                    value={data.skills[skill] || 0}
+                    onChange={(e) =>
+                      updateSkill(skill, parseInt(e.target.value) || 0)
+                    }
+                  />
+                </div>
               </div>
             ))}
           </div>
@@ -61,15 +42,40 @@ export default function Ability({ data, updateSkill }: AbilityProps) {
                 <span className="text-sm capitalize">
                   {skill.replace(/-/g, " ")}
                 </span>
-                <input
-                  type="number"
-                  className="w-12 text-right"
-                  placeholder="0"
-                  value={data.skills[skill] || 0}
-                  onChange={(e) =>
-                    updateSkill(skill, parseInt(e.target.value) || 0)
-                  }
-                />
+                <div className="w-12">
+                  <input
+                    type="number"
+                    className="w-12 text-right"
+                    placeholder="0"
+                    value={data.skills[skill] || 0}
+                    onChange={(e) =>
+                      updateSkill(skill, parseInt(e.target.value) || 0)
+                    }
+                  />
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+
+        {/* VOL Skills */}
+        <div className="border-l-2 border-zinc-700 pl-4">
+          <h3 className="text-zinc-500 text-sm mb-2">Volontà</h3>
+          <div className="space-y-2">
+            {["empatia", "intuizione", "percezione", "rituali"].map((skill) => (
+              <div key={skill} className="flex justify-between items-center">
+                <span className="text-sm capitalize">{skill}</span>
+                <div className="w-12">
+                  <input
+                    type="number"
+                    className="w-12 text-right"
+                    placeholder="0"
+                    value={data.skills[skill] || 0}
+                    onChange={(e) =>
+                      updateSkill(skill, parseInt(e.target.value) || 0)
+                    }
+                  />
+                </div>
               </div>
             ))}
           </div>
@@ -83,15 +89,17 @@ export default function Ability({ data, updateSkill }: AbilityProps) {
               (skill) => (
                 <div key={skill} className="flex justify-between items-center">
                   <span className="text-sm capitalize">{skill}</span>
-                  <input
-                    type="number"
-                    className="w-12 text-right"
-                    placeholder="0"
-                    value={data.skills[skill] || 0}
-                    onChange={(e) =>
-                      updateSkill(skill, parseInt(e.target.value) || 0)
-                    }
-                  />
+                  <div className="w-12">
+                    <input
+                      type="number"
+                      className="w-12 text-right"
+                      placeholder="0"
+                      value={data.skills[skill] || 0}
+                      onChange={(e) =>
+                        updateSkill(skill, parseInt(e.target.value) || 0)
+                      }
+                    />
+                  </div>
                 </div>
               )
             )}
