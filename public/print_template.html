@@ -1,0 +1,699 @@
+<!DOCTYPE html>
+<html lang="it">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Orbis Arcana Sheet Template</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700&family=Roboto+Mono:wght@300;400;500&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      :root {
+        --bg-color: white;
+        --panel-color: white;
+        --text-color: black;
+        --accent-color: black;
+        --accent-glow: transparent;
+        --border-color: black;
+      }
+
+      .page {
+        width: 21cm;
+        min-height: 29.7cm;
+        padding: 1cm;
+        margin: 1cm auto;
+        border: 1px #d3d3d3 solid;
+        border-radius: 5px;
+        background: white;
+        box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
+      }
+
+      body {
+        background-color: var(--bg-color);
+        color: var(--text-color);
+        font-family: "Roboto Mono", monospace;
+        margin: 0;
+        padding: 0;
+        -webkit-print-color-adjust: exact;
+        print-color-adjust: exact;
+      }
+
+      h1,
+      h2,
+      h3,
+      .gothic-font {
+        font-family: "Cinzel", serif;
+        text-transform: uppercase;
+        letter-spacing: 2px;
+        color: black;
+      }
+
+      /* Inputs styling to look like a sheet */
+      input[type="text"],
+      input[type="number"],
+      textarea {
+        background: transparent;
+        border: none;
+        border-bottom: 1px solid var(--border-color);
+        color: black;
+        width: 100%;
+        padding: 4px;
+        font-family: "Roboto Mono", monospace;
+        box-shadow: none;
+      }
+
+      input[type="text"]:focus,
+      input[type="number"]:focus,
+      textarea:focus {
+        outline: none;
+        border-bottom: 1px solid black;
+        box-shadow: none;
+      }
+
+      /* Stat Boxes */
+      .stat-box {
+        border: 2px solid var(--border-color);
+        background: var(--panel-color);
+        position: relative;
+      }
+
+      /* Points / Tracks (Circles) */
+      .track-circle {
+        width: 24px;
+        height: 24px;
+        border: 2px solid black;
+        border-radius: 50%;
+        cursor: pointer;
+        transition: all 0.2s;
+      }
+
+      .track-circle.filled {
+        background-color: #444;
+        border-color: black;
+        box-shadow: none;
+      }
+
+      /* Specific section styling */
+      .section-header {
+        border-bottom: 2px solid black;
+        padding-bottom: 4px;
+        margin-bottom: 16px;
+        color: black;
+        text-shadow: none;
+      }
+
+      /* Main Container */
+      #character-sheet {
+        max-width: 100%;
+        width: 100%;
+        margin: 0 auto;
+
+        box-shadow: none;
+        border: none;
+        background: white;
+      }
+
+      /* Print styles - mostly for page setup now */
+      @media print {
+        @page {
+          size: A4;
+          margin: 0;
+        }
+
+        body {
+          display: block;
+        }
+
+        .page {
+          margin: 0;
+          border: initial;
+          border-radius: initial;
+          width: initial;
+          box-shadow: initial;
+          background: initial;
+          padding: none;
+          page-break-after: always;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div id="character-sheet">
+      <!-- Page 1 -->
+      <div class="page">
+        <!-- Header / Info Base -->
+        <div class="grid grid-cols-3 gap-6 items-end mb-10">
+          <div class="col-span-3 text-center mb-4">
+            <h1
+              class="text-4xl font-bold tracking-widest border-b border-black pb-4"
+            >
+              Orbis Arcana
+            </h1>
+            <p class="text-xs text-zinc-600 mt-1 uppercase tracking-[0.3em]">
+              Scheda del Personaggio
+            </p>
+          </div>
+
+          <div>
+            <label class="block text-xs uppercase text-zinc-600 mb-1">
+              Nome PG
+            </label>
+            <input
+              type="text"
+              class="text-lg font-bold"
+              placeholder="..."
+              value="{{info.name}}"
+            />
+          </div>
+          <div>
+            <label class="block text-xs uppercase text-zinc-600 mb-1">
+              Alias / Nome in Codice
+            </label>
+            <input type="text" placeholder="..." value="{{info.alias}}" />
+          </div>
+          <div>
+            <label class="block text-xs uppercase text-zinc-600 mb-1">
+              Professione
+            </label>
+            <input type="text" placeholder="..." value="{{info.profession}}" />
+          </div>
+        </div>
+
+        <div class="grid grid-cols-12 gap-8">
+          <!-- LEFT COLUMN: Attributes & Skills -->
+          <div class="col-span-7 space-y-8">
+            <!-- CARATTERISTICHE -->
+            <div>
+              <h2 class="section-header text-xl">Caratteristiche</h2>
+              <div class="grid grid-cols-4 gap-4">
+                <div
+                  class="stat-box p-4 flex flex-col items-center justify-center aspect-square rounded"
+                >
+                  <span class="gothic-font text-sm mb-2 capitalize">FOR</span>
+                  <input
+                    type="number"
+                    class="text-center text-3xl font-bold bg-transparent !border-none w-full focus:ring-0"
+                    value="{{stats.forza}}"
+                  />
+                </div>
+                <div
+                  class="stat-box p-4 flex flex-col items-center justify-center aspect-square rounded"
+                >
+                  <span class="gothic-font text-sm mb-2 capitalize"
+                    >AGI</span
+                  >
+                  <input
+                    type="number"
+                    class="text-center text-3xl font-bold bg-transparent !border-none w-full focus:ring-0"
+                    value="{{stats.agilita}}"
+                  />
+                </div>
+                <div
+                  class="stat-box p-4 flex flex-col items-center justify-center aspect-square rounded"
+                >
+                  <span class="gothic-font text-sm mb-2 capitalize"
+                    >VOL</span
+                  >
+                  <input
+                    type="number"
+                    class="text-center text-3xl font-bold bg-transparent !border-none w-full focus:ring-0"
+                    value="{{stats.volonta}}"
+                  />
+                </div>
+                <div
+                  class="stat-box p-4 flex flex-col items-center justify-center aspect-square rounded"
+                >
+                  <span class="gothic-font text-sm mb-2 capitalize"
+                    >INT</span
+                  >
+                  <input
+                    type="number"
+                    class="text-center text-3xl font-bold bg-transparent !border-none w-full focus:ring-0"
+                    value="{{stats.intelligenza}}"
+                  />
+                </div>
+              </div>
+            </div>
+
+            <!-- ABILITÀ -->
+            <div>
+              <h2 class="section-header text-xl">Abilità</h2>
+              <div class="grid grid-cols-2 gap-x-8 gap-y-6">
+                <!-- FOR Skills -->
+                <div class="border-l-2 border-zinc-400 pl-4">
+                  <h3 class="text-zinc-600 text-sm mb-2">Forza</h3>
+                  <div class="space-y-2">
+                    <div class="flex justify-between items-center">
+                      <span class="text-sm capitalize">movimento</span>
+                      <div class="w-12">
+                        <input
+                          type="number"
+                          class="w-12 text-right"
+                          placeholder="0"
+                          value="{{skills.movimento}}"
+                        />
+                      </div>
+                    </div>
+                    <div class="flex justify-between items-center">
+                      <span class="text-sm capitalize">resistenza</span>
+                      <div class="w-12">
+                        <input
+                          type="number"
+                          class="w-12 text-right"
+                          placeholder="0"
+                          value="{{skills.resistenza}}"
+                        />
+                      </div>
+                    </div>
+                    <div class="flex justify-between items-center">
+                      <span class="text-sm capitalize">rissa</span>
+                      <div class="w-12">
+                        <input
+                          type="number"
+                          class="w-12 text-right"
+                          placeholder="0"
+                          value="{{skills.rissa}}"
+                        />
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                <!-- AGI Skills -->
+                <div class="border-l-2 border-zinc-400 pl-4">
+                  <h3 class="text-zinc-600 text-sm mb-2">Agilità</h3>
+                  <div class="space-y-2">
+                    <div class="flex justify-between items-center">
+                      <span class="text-sm capitalize">armi da fuoco</span>
+                      <div class="w-12">
+                        <input
+                          type="number"
+                          class="w-12 text-right"
+                          placeholder="0"
+                          value="{{skills.armi-da-fuoco}}"
+                        />
+                      </div>
+                    </div>
+                    <div class="flex justify-between items-center">
+                      <span class="text-sm capitalize">furtività</span>
+                      <div class="w-12">
+                        <input
+                          type="number"
+                          class="w-12 text-right"
+                          placeholder="0"
+                          value="{{skills.furtivita}}"
+                        />
+                      </div>
+                    </div>
+                    <div class="flex justify-between items-center">
+                      <span class="text-sm capitalize">gioco di mano</span>
+                      <div class="w-12">
+                        <input
+                          type="number"
+                          class="w-12 text-right"
+                          placeholder="0"
+                          value="{{skills.gioco-di-mano}}"
+                        />
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                <!-- VOL Skills -->
+                <div class="border-l-2 border-zinc-400 pl-4">
+                  <h3 class="text-zinc-600 text-sm mb-2">Volontà</h3>
+                  <div class="space-y-2">
+                    <div class="flex justify-between items-center">
+                      <span class="text-sm capitalize">empatia</span>
+                      <div class="w-12">
+                        <input
+                          type="number"
+                          class="w-12 text-right"
+                          placeholder="0"
+                          value="{{skills.empatia}}"
+                        />
+                      </div>
+                    </div>
+                    <div class="flex justify-between items-center">
+                      <span class="text-sm capitalize">intuizione</span>
+                      <div class="w-12">
+                        <input
+                          type="number"
+                          class="w-12 text-right"
+                          placeholder="0"
+                          value="{{skills.intuizione}}"
+                        />
+                      </div>
+                    </div>
+                    <div class="flex justify-between items-center">
+                      <span class="text-sm capitalize">percezione</span>
+                      <div class="w-12">
+                        <input
+                          type="number"
+                          class="w-12 text-right"
+                          placeholder="0"
+                          value="{{skills.percezione}}"
+                        />
+                      </div>
+                    </div>
+                    <div class="flex justify-between items-center">
+                      <span class="text-sm capitalize">rituali</span>
+                      <div class="w-12">
+                        <input
+                          type="number"
+                          class="w-12 text-right"
+                          placeholder="0"
+                          value="{{skills.rituali}}"
+                        />
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                <!-- INT Skills -->
+                <div class="border-l-2 border-zinc-400 pl-4">
+                  <h3 class="text-zinc-600 text-sm mb-2">Intelligenza</h3>
+                  <div class="space-y-2">
+                    <div class="flex justify-between items-center">
+                      <span class="text-sm capitalize">informatica</span>
+                      <div class="w-12">
+                        <input
+                          type="number"
+                          class="w-12 text-right"
+                          placeholder="0"
+                          value="{{skills.informatica}}"
+                        />
+                      </div>
+                    </div>
+                    <div class="flex justify-between items-center">
+                      <span class="text-sm capitalize">ingegneria</span>
+                      <div class="w-12">
+                        <input
+                          type="number"
+                          class="w-12 text-right"
+                          placeholder="0"
+                          value="{{skills.ingegneria}}"
+                        />
+                      </div>
+                    </div>
+                    <div class="flex justify-between items-center">
+                      <span class="text-sm capitalize">investigazione</span>
+                      <div class="w-12">
+                        <input
+                          type="number"
+                          class="w-12 text-right"
+                          placeholder="0"
+                          value="{{skills.investigazione}}"
+                        />
+                      </div>
+                    </div>
+                    <div class="flex justify-between items-center">
+                      <span class="text-sm capitalize">occultismo</span>
+                      <div class="w-12">
+                        <input
+                          type="number"
+                          class="w-12 text-right"
+                          placeholder="0"
+                          value="{{skills.occultismo}}"
+                        />
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- RIGHT COLUMN: Points & Inventory -->
+          <div class="col-span-5 space-y-8">
+            <!-- PUNTI (Tracks) -->
+            <div class="bg-white p-6 rounded border border-black">
+              <h2 class="section-header text-xl mb-4">Stato Vitale</h2>
+
+              <!-- Dadi Maledetti -->
+              <div class="mb-6">
+                <div class="flex justify-between mb-2">
+                  <span class="gothic-font font-bold text-black">
+                    Dadi Maledetti
+                  </span>
+                  <span class="text-xs text-zinc-600">CORRUZIONE</span>
+                </div>
+                <div
+                  class="flex gap-2 justify-center track-container"
+                  data-value="{{tracks.maledetti}}"
+                >
+                  <div class="track-circle"></div>
+                  <div class="track-circle"></div>
+                  <div class="track-circle"></div>
+                  <div class="track-circle"></div>
+                  <div class="track-circle"></div>
+                  <div class="track-circle"></div>
+                </div>
+              </div>
+
+              <!-- Salute -->
+              <div class="mb-6">
+                <div class="flex justify-between mb-2">
+                  <span class="gothic-font font-bold text-black">Salute</span>
+                  <span class="text-xs text-zinc-600">FISICO</span>
+                </div>
+                <div
+                  class="flex gap-2 justify-center track-container"
+                  data-value="{{tracks.salute}}"
+                >
+                  <div class="track-circle"></div>
+                  <div class="track-circle"></div>
+                  <div class="track-circle"></div>
+                  <div class="track-circle"></div>
+                  <div class="track-circle"></div>
+                  <div class="track-circle"></div>
+                </div>
+              </div>
+
+              <!-- Stress -->
+              <div>
+                <div class="flex justify-between mb-2">
+                  <span class="gothic-font font-bold text-black">Stress</span>
+                  <span class="text-xs text-zinc-600">MENTALE</span>
+                </div>
+                <div
+                  class="flex gap-2 justify-center track-container"
+                  data-value="{{tracks.stress}}"
+                >
+                  <div class="track-circle"></div>
+                  <div class="track-circle"></div>
+                  <div class="track-circle"></div>
+                  <div class="track-circle"></div>
+                  <div class="track-circle"></div>
+                  <div class="track-circle"></div>
+                </div>
+              </div>
+            </div>
+
+            <!-- DOTI -->
+            <div class="mt-8 pt-4 border-t border-black">
+              <h2 class="section-header text-xl">Doti & Talenti</h2>
+              <table class="w-full text-left border-collapse">
+                <thead>
+                  <tr
+                    class="text-zinc-600 text-xs uppercase tracking-wider border-b border-zinc-400"
+                  >
+                    <th class="py-2 w-3/4">Nome Dote / Descrizione</th>
+                    <th class="py-2 w-1/8 text-center">Liv.</th>
+                    <th class="py-2 w-1/8 text-center">Pag.</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td class="py-2 pr-4">
+                      <input
+                        type="text"
+                        placeholder="Nome dote..."
+                        value="{{talents.0.name}}"
+                      />
+                    </td>
+                    <td class="py-2 px-2">
+                      <input
+                        type="number"
+                        class="text-center"
+                        value="{{talents.0.level}}"
+                      />
+                    </td>
+                    <td class="py-2 pl-2">
+                      <input
+                        type="number"
+                        class="text-center text-zinc-600"
+                        value="{{talents.0.page}}"
+                      />
+                    </td>
+                  </tr>
+                  <tr>
+                    <td class="py-2 pr-4">
+                      <input
+                        type="text"
+                        placeholder="Nome dote..."
+                        value="{{talents.1.name}}"
+                      />
+                    </td>
+                    <td class="py-2 px-2">
+                      <input
+                        type="number"
+                        class="text-center"
+                        value="{{talents.1.level}}"
+                      />
+                    </td>
+                    <td class="py-2 pl-2">
+                      <input
+                        type="number"
+                        class="text-center text-zinc-600"
+                        value="{{talents.1.page}}"
+                      />
+                    </td>
+                  </tr>
+                  <tr>
+                    <td class="py-2 pr-4">
+                      <input
+                        type="text"
+                        placeholder="Nome dote..."
+                        value="{{talents.2.name}}"
+                      />
+                    </td>
+                    <td class="py-2 px-2">
+                      <input
+                        type="number"
+                        class="text-center"
+                        value="{{talents.2.level}}"
+                      />
+                    </td>
+                    <td class="py-2 pl-2">
+                      <input
+                        type="number"
+                        class="text-center text-zinc-600"
+                        value="{{talents.2.page}}"
+                      />
+                    </td>
+                  </tr>
+                  <tr>
+                    <td class="py-2 pr-4">
+                      <input
+                        type="text"
+                        placeholder="Nome dote..."
+                        value="{{talents.3.name}}"
+                      />
+                    </td>
+                    <td class="py-2 px-2">
+                      <input
+                        type="number"
+                        class="text-center"
+                        value="{{talents.3.level}}"
+                      />
+                    </td>
+                    <td class="py-2 pl-2">
+                      <input
+                        type="number"
+                        class="text-center text-zinc-600"
+                        value="{{talents.3.page}}"
+                      />
+                    </td>
+                  </tr>
+                  <tr>
+                    <td class="py-2 pr-4">
+                      <input
+                        type="text"
+                        placeholder="Nome dote..."
+                        value="{{talents.4.name}}"
+                      />
+                    </td>
+                    <td class="py-2 px-2">
+                      <input
+                        type="number"
+                        class="text-center"
+                        value="{{talents.4.level}}"
+                      />
+                    </td>
+                    <td class="py-2 pl-2">
+                      <input
+                        type="number"
+                        class="text-center text-zinc-600"
+                        value="{{talents.4.page}}"
+                      />
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Page 2 -->
+      <div class="page">
+        <!-- second page -->
+        <div class="col-span-12 space-y-8">
+          <div class="col-span-3 text-center mb-4">
+            <h1
+              class="text-4xl font-bold tracking-widest border-b border-black pb-4"
+            >
+              Orbis Arcana
+            </h1>
+            <p class="text-xs text-zinc-600 mt-1 uppercase tracking-[0.3em]">
+              Scheda del Personaggio
+            </p>
+          </div>
+          <!-- ZAINO -->
+          <div>
+            <h2 class="section-header text-xl">Zaino</h2>
+            <div class="w-full bg-white border border-black p-2 min-h-[200px]">
+              <textarea
+                class="w-full h-full bg-transparent border-none resize-none text-sm"
+                placeholder="Equipaggiamento, consumabili, oggetti chiave..."
+                rows="10"
+              >
+{{inventory}}</textarea
+              >
+            </div>
+          </div>
+
+          <!-- ARMI -->
+          <div>
+            <h2 class="section-header text-xl">Armi</h2>
+            <div class="space-y-2">
+              <input
+                type="text"
+                placeholder="Arma 1 (Danno / Note)"
+                value="{{weapons.0}}"
+              />
+              <input
+                type="text"
+                placeholder="Arma 2 (Danno / Note)"
+                value="{{weapons.1}}"
+              />
+              <input
+                type="text"
+                placeholder="Arma 3 (Danno / Note)"
+                value="{{weapons.2}}"
+              />
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <script>
+      // Script to fill tracks based on data-value
+      document.addEventListener("DOMContentLoaded", () => {
+        document.querySelectorAll(".track-container").forEach((container) => {
+          const value = parseInt(container.getAttribute("data-value")) || 0;
+          const circles = container.querySelectorAll(".track-circle");
+          circles.forEach((circle, index) => {
+            if (index < value) {
+              circle.classList.add("filled");
+            }
+          });
+        });
+      });
+    </script>
+  </body>
+</html>
