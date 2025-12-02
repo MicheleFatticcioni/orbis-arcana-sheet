@@ -46,7 +46,7 @@ const INITIAL_DATA: CharacterData = {
     percezione: 0,
     rituali: 0,
     "armi-da-fuoco": 0,
-    furtivi: 0,
+    furtivita: 0,
     "gioco-di-mano": 0,
     informatica: 0,
     ingegneria: 0,

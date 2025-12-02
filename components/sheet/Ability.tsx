@@ -56,7 +56,7 @@ export default function Ability({ data, updateSkill }: AbilityProps) {
         <div className="border-l-2 border-zinc-700 pl-4">
           <h3 className="text-zinc-500 text-sm mb-2">Agilità</h3>
           <div className="space-y-2">
-            {["armi-da-fuoco", "furtivi", "gioco-di-mano"].map((skill) => (
+            {["armi-da-fuoco", "furtività", "gioco-di-mano"].map((skill) => (
               <div key={skill} className="flex justify-between items-center">
                 <span className="text-sm capitalize">
                   {skill.replace(/-/g, " ")}
