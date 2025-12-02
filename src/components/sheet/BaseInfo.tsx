@@ -1,11 +1,8 @@
-import { BaseSheetProps } from "./sheet.interface";
-import { CharacterData } from "../CharacterSheet";
+import { useSheet, useUpdateInfo } from "@/src/stores/useSheetStore.state";
 
-interface BaseInfoProps extends BaseSheetProps {
-    updateInfo: (field: keyof CharacterData["info"], value: string) => void;
-}
-
-export default function BaseInfo({ data, updateInfo }: BaseInfoProps) {
+export default function BaseInfo() {
+    const sheet = useSheet();
+    const updateInfo = useUpdateInfo();
   return (
     <div className="mb-10 grid grid-cols-1 md:grid-cols-3 gap-6 items-end">
       <div className="col-span-1 md:col-span-3 text-center mb-4">
@@ -25,7 +22,7 @@ export default function BaseInfo({ data, updateInfo }: BaseInfoProps) {
           type="text"
           className="text-lg font-bold"
           placeholder="..."
-          value={data.info.name}
+          value={sheet.info.name}
           onChange={(e) => updateInfo("name", e.target.value)}
         />
       </div>
@@ -36,7 +33,7 @@ export default function BaseInfo({ data, updateInfo }: BaseInfoProps) {
         <input
           type="text"
           placeholder="..."
-          value={data.info.alias}
+          value={sheet.info.alias}
           onChange={(e) => updateInfo("alias", e.target.value)}
         />
       </div>
@@ -47,7 +44,7 @@ export default function BaseInfo({ data, updateInfo }: BaseInfoProps) {
         <input
           type="text"
           placeholder="..."
-          value={data.info.profession}
+          value={sheet.info.profession}
           onChange={(e) => updateInfo("profession", e.target.value)}
         />
       </div>

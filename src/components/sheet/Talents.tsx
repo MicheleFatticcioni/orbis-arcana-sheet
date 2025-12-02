@@ -1,15 +1,19 @@
+import { useSheet, useUpdateTalents } from "@/src/stores/useSheetStore.state";
 import { CharacterData } from "../CharacterSheet";
-import { BaseSheetProps } from "./sheet.interface";
+export default function Talents() {
+  const sheet = useSheet();
+  const updateTalent = useUpdateTalents();
 
-interface TalentsProps extends BaseSheetProps {
-  updateTalent: (
+  const talentChangeHandler = (
     index: number,
     field: keyof CharacterData["talents"][0],
     value: string | number
-  ) => void;
-}
+  ) => {
+    const newTalents = [...sheet.talents];
+    newTalents[index] = { ...newTalents[index], [field]: value };
+    updateTalent(newTalents);
+  };
 
-export default function Talents({ data, updateTalent }: TalentsProps) {
   return (
     <div className="mt-8 pt-4 border-t border-zinc-800">
       <h2 className="section-header text-xl">Doti & Talenti</h2>
@@ -22,14 +26,16 @@ export default function Talents({ data, updateTalent }: TalentsProps) {
           </tr>
         </thead>
         <tbody>
-          {data.talents.map((t, i) => (
+          {sheet.talents.map((t, i) => (
             <tr key={i}>
               <td className="py-2 pr-4">
                 <input
                   type="text"
                   placeholder="Nome dote..."
                   value={t.name}
-                  onChange={(e) => updateTalent(i, "name", e.target.value)}
+                  onChange={(e) =>
+                    talentChangeHandler(i, "name", e.target.value)
+                  }
                 />
               </td>
               <td className="py-2 px-2">
@@ -38,7 +44,11 @@ export default function Talents({ data, updateTalent }: TalentsProps) {
                   className="text-center"
                   value={t.level || ""}
                   onChange={(e) =>
-                    updateTalent(i, "level", parseInt(e.target.value) || 0)
+                    talentChangeHandler(
+                      i,
+                      "level",
+                      parseInt(e.target.value) || 0
+                    )
                   }
                 />
               </td>
@@ -48,7 +58,11 @@ export default function Talents({ data, updateTalent }: TalentsProps) {
                   className="text-center text-zinc-500"
                   value={t.page || ""}
                   onChange={(e) =>
-                    updateTalent(i, "page", parseInt(e.target.value) || 0)
+                    talentChangeHandler(
+                      i,
+                      "page",
+                      parseInt(e.target.value) || 0
+                    )
                   }
                 />
               </td>

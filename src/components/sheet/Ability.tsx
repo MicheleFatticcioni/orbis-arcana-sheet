@@ -1,11 +1,8 @@
-import { CharacterData } from "../CharacterSheet";
-import { BaseSheetProps } from "./sheet.interface";
+import { useSheet, useUpdateSkills } from "@/src/stores/useSheetStore.state";
 
-interface AbilityProps extends BaseSheetProps {
-  updateSkill: (field: keyof CharacterData["skills"], value: number) => void;
-}
-
-export default function Ability({ data, updateSkill }: AbilityProps) {
+export default function Ability() {
+  const sheet = useSheet();
+  const updateSkill = useUpdateSkills();
   return (
     <div>
       <h2 className="section-header text-xl">Abilità</h2>
@@ -22,7 +19,9 @@ export default function Ability({ data, updateSkill }: AbilityProps) {
                     type="number"
                     className="w-12 text-right"
                     placeholder="0"
-                    value={data.skills[skill] || 0}
+                    value={
+                      sheet.skills[skill as keyof typeof sheet.skills] || 0
+                    }
                     onChange={(e) =>
                       updateSkill(skill, parseInt(e.target.value) || 0)
                     }
@@ -47,9 +46,14 @@ export default function Ability({ data, updateSkill }: AbilityProps) {
                     type="number"
                     className="w-12 text-right"
                     placeholder="0"
-                    value={data.skills[skill] || 0}
+                    value={
+                      sheet.skills[skill as keyof typeof sheet.skills] || 0
+                    }
                     onChange={(e) =>
-                      updateSkill(skill, parseInt(e.target.value) || 0)
+                      updateSkill(
+                        skill as keyof typeof sheet.skills,
+                        parseInt(e.target.value) || 0
+                      )
                     }
                   />
                 </div>
@@ -70,9 +74,14 @@ export default function Ability({ data, updateSkill }: AbilityProps) {
                     type="number"
                     className="w-12 text-right"
                     placeholder="0"
-                    value={data.skills[skill] || 0}
+                    value={
+                      sheet.skills[skill as keyof typeof sheet.skills] || 0
+                    }
                     onChange={(e) =>
-                      updateSkill(skill, parseInt(e.target.value) || 0)
+                      updateSkill(
+                        skill as keyof typeof sheet.skills,
+                        parseInt(e.target.value) || 0
+                      )
                     }
                   />
                 </div>
@@ -94,9 +103,14 @@ export default function Ability({ data, updateSkill }: AbilityProps) {
                       type="number"
                       className="w-12 text-right"
                       placeholder="0"
-                      value={data.skills[skill] || 0}
+                      value={
+                        sheet.skills[skill as keyof typeof sheet.skills] || 0
+                      }
                       onChange={(e) =>
-                        updateSkill(skill, parseInt(e.target.value) || 0)
+                        updateSkill(
+                          skill as keyof typeof sheet.skills,
+                          parseInt(e.target.value) || 0
+                        )
                       }
                     />
                   </div>
