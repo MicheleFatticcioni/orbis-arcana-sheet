@@ -20,7 +20,7 @@ export default function Talents() {
       <table className="w-full text-left border-collapse">
         <thead>
           <tr className="text-zinc-500 text-xs uppercase tracking-wider border-b border-zinc-700">
-            <th className="py-2 w-3/4">Nome Dote / Descrizione</th>
+            <th className="py-2 w-1/2">Nome Dote / Descrizione</th>
             <th className="py-2 w-1/8 text-center">Liv.</th>
             <th className="py-2 w-1/8 text-center">Pag.</th>
           </tr>
