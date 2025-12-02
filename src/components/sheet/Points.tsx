@@ -1,14 +1,26 @@
+import { useSheet, useUpdateTracks } from "@/src/stores/useSheetStore.state";
 import { CharacterData } from "../CharacterSheet";
-import { BaseSheetProps } from "./sheet.interface";
 
-interface PointsProps extends BaseSheetProps {
-  handleTrackClick: (
+export default function Points() {
+
+  const sheet = useSheet();
+  const updateTrack = useUpdateTracks();
+
+  const handleTrackClick = (
     track: keyof CharacterData["tracks"],
     index: number
-  ) => void;
-}
+  ) => {
+    const currentValue = sheet.tracks[track];
+    // index is 1-based here
+    if (currentValue === index) {
+      // If clicking the last filled one, remove it (set to index - 1)
+      updateTrack(track, index - 1);
+    } else {
+      // Fill up to index
+      updateTrack(track, index);
+    }
+  };
 
-export default function Points({ data, handleTrackClick }: PointsProps) {
   return (
     <div className="bg-zinc-800/50 p-6 rounded border border-zinc-700">
       <h2 className="section-header text-xl mb-4">Stato Vitale</h2>
@@ -26,7 +38,7 @@ export default function Points({ data, handleTrackClick }: PointsProps) {
             <div
               key={i}
               className={`track-circle ${
-                i <= data.tracks.maledetti ? "filled" : ""
+                i <= sheet.tracks.maledetti ? "filled" : ""
               }`}
               onClick={() => handleTrackClick("maledetti", i)}
             />
@@ -45,7 +57,7 @@ export default function Points({ data, handleTrackClick }: PointsProps) {
             <div
               key={i}
               className={`track-circle ${
-                i <= data.tracks.salute ? "filled" : ""
+                i <= sheet.tracks.salute ? "filled" : ""
               }`}
               onClick={() => handleTrackClick("salute", i)}
             />
@@ -64,7 +76,7 @@ export default function Points({ data, handleTrackClick }: PointsProps) {
             <div
               key={i}
               className={`track-circle ${
-                i <= data.tracks.stress ? "filled" : ""
+                i <= sheet.tracks.stress ? "filled" : ""
               }`}
               onClick={() => handleTrackClick("stress", i)}
             />

@@ -1,12 +1,9 @@
-import { BaseSheetProps } from "./sheet.interface";
-import { CharacterData } from "../CharacterSheet";
-import { useIsMobile } from "@/hooks/useIsMobile";
+import { useSheet, useUpdateStats } from "@/src/stores/useSheetStore.state";
+import { useIsMobile } from "@/src/hooks/useIsMobile";
 
-interface AttributesProps extends BaseSheetProps {
-  updateStat: (field: keyof CharacterData["stats"], value: number) => void;
-}
-
-export default function Attributes({ data, updateStat }: AttributesProps) {
+export default function Attributes() {
+  const sheet = useSheet();
+  const updateStat = useUpdateStats();
   const isMobile = useIsMobile();
 
   return (
@@ -24,10 +21,10 @@ export default function Attributes({ data, updateStat }: AttributesProps) {
             <input
               type="number"
               className="text-center text-3xl font-bold bg-transparent !border-none w-full focus:ring-0"
-              value={data.stats[stat as keyof CharacterData["stats"]] || 0}
+              value={sheet.stats[stat as keyof typeof sheet.stats] || 0}
               onChange={(e) =>
                 updateStat(
-                  stat as keyof CharacterData["stats"],
+                  stat as keyof typeof sheet.stats,
                   parseInt(e.target.value) || 0
                 )
               }

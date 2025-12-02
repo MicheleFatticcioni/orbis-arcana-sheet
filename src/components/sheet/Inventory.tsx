@@ -1,10 +1,8 @@
-import { BaseSheetProps } from "./sheet.interface";
+import { useSheet, useUpdateInventory } from "@/src/stores/useSheetStore.state";
 
-interface InventoryProps extends BaseSheetProps {
-  updateInventory: (value: string) => void;
-}
-
-export default function Inventory({ data, updateInventory }: InventoryProps) {
+export default function Inventory() {
+  const sheet = useSheet();
+  const updateInventory = useUpdateInventory();
   return (
     <div>
       <h2 className="section-header text-xl">Zaino</h2>
@@ -55,7 +53,7 @@ export default function Inventory({ data, updateInventory }: InventoryProps) {
         <textarea
           className="w-full h-full bg-transparent border-none resize-none text-sm"
           placeholder="Equipaggiamento, consumabili, oggetti chiave..."
-          value={data.inventory}
+          value={sheet.inventory}
           onChange={(e) => updateInventory(e.target.value)}
           rows={10}
         ></textarea>
