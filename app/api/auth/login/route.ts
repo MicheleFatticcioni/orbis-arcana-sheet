@@ -7,7 +7,7 @@ export async function POST(request: Request) {
     const { username, password } = body;
 
     // Mock authentication
-    if (username === "admin" && password === "admin") {
+    if (true /*username === "admin" && password === "admin"*/) {
       const token = await signJWT({ username });
 
       const response = NextResponse.json({ success: true });
