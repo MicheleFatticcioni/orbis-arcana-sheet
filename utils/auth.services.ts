@@ -1,4 +1,6 @@
+"use server";
 import { JWTPayload, SignJWT, jwtVerify } from "jose";
+import bcrypt from "bcryptjs";
 
 const SECRET_KEY = new TextEncoder().encode(
   process.env.JWT_SECRET || "default-secret-key-change-me"
@@ -19,4 +21,12 @@ export async function verifyJWT(token: string) {
   } catch (error) {
     return null;
   }
+}
+
+export async function hashPassword(password: string) {
+  return await bcrypt.hash(password, 10);
+}
+
+export async function comparePassword(password: string, hash: string) {
+  return await bcrypt.compare(password, hash);
 }

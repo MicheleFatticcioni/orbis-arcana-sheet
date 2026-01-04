@@ -1,34 +1,59 @@
 import { NextResponse } from "next/server";
-import { signJWT } from "@/utils/auth";
+import { comparePassword, signJWT } from "@/utils/auth.services";
+import { query } from "@/utils/query";
 
 export async function POST(request: Request) {
+  const body = await request.json();
+  const { username, password } = body;
+
   try {
-    const body = await request.json();
-    const { username, password } = body;
-
     // Mock authentication
-    if (username === "admin" && password === "admin") {
-      const token = await signJWT({ username });
+    const users = await query<
+      {
+        id: number;
+        username: string;
+        password: string;
+      }[]
+    >`
+      SELECT id, username, password
+      FROM users
+      WHERE username = ${username}
+      LIMIT 1
+    `;
 
-      const response = NextResponse.json({ success: true });
-
-      response.cookies.set({
-        name: "auth_token",
-        value: token,
-        httpOnly: true,
-        path: "/",
-        secure: process.env.NODE_ENV === "production",
-        maxAge: 60 * 60 * 24, // 1 day
-      });
-
-      return response;
+    if (!users.length || users.length === 0) {
+      return NextResponse.json(
+        { success: false, message: "Invalid credentials" },
+        { status: 401 }
+      );
     }
 
-    return NextResponse.json(
-      { success: false, message: "Invalid credentials" },
-      { status: 401 }
-    );
+    const user = users[0];
+
+    const isPasswordValid = await comparePassword(password, user.password);
+    if (!isPasswordValid) {
+      return NextResponse.json(
+        { success: false, message: "Invalid credentials" },
+        { status: 401 }
+      );
+    }
+
+    const token = await signJWT({ username });
+
+    const response = NextResponse.json({ success: true });
+
+    response.cookies.set({
+      name: "auth_token",
+      value: token,
+      httpOnly: true,
+      path: "/",
+      secure: process.env.NODE_ENV === "production",
+      maxAge: 60 * 60 * 24, // 1 day
+    });
+
+    return response;
   } catch (error) {
+    console.error(error);
     return NextResponse.json(
       { success: false, message: "Internal server error" },
       { status: 500 }
