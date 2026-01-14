@@ -21,6 +21,6 @@ export const INITIAL_DATA: CharacterData = {
   },
   tracks: { maledetti: 0, salute: 0, stress: 0 },
   inventory: "",
-  weapons: ["", "", ""],
+  weapons: ["", "", "", "", "", ""],
   talents: Array(5).fill({ name: "", level: 0, page: 0 }),
 };

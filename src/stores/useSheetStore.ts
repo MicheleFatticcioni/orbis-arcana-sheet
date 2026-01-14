@@ -16,7 +16,16 @@ interface SheetStore {
 
 export const useSheetStore = create<SheetStore>((set) => ({
   sheet: INITIAL_DATA,
-  updateSheet: (sheet: CharacterData) => set({ sheet }),
+  updateSheet: (sheet: CharacterData) =>
+    set({
+      sheet: {
+        ...sheet,
+        weapons:
+          sheet.weapons.length < 6
+            ? [...sheet.weapons, ...Array(6 - sheet.weapons.length).fill("")]
+            : sheet.weapons,
+      },
+    }),
   updateInfo: (field: keyof CharacterData["info"], value: string) =>
     set((state) => ({
       sheet: {
