@@ -8,6 +8,7 @@ import Talents from "./sheet/Talents";
 import Points from "./sheet/Points";
 import Inventory from "./sheet/Inventory";
 import Wapons from "./sheet/Wapons";
+import PregeneratedLoader from "./sheet/PregeneratedLoader";
 import { INITIAL_DATA } from "../constant/initialData";
 import { useSheet, useUpdateSheet } from "../stores/useSheetStore.state";
 
@@ -91,7 +92,6 @@ export default function CharacterSheet() {
     <div className="w-full max-w-6xl bg-zinc-900 p-6 md:p-10 shadow-2xl border border-zinc-800 relative">
       {/* Header / Info Base */}
       <BaseInfo />
-
       <div className="grid grid-cols-1 lg:grid-cols-12 gap-8">
         {/* LEFT COLUMN: Attributes & Skills */}
         <div className="lg:col-span-7 space-y-8">
@@ -128,39 +128,39 @@ export default function CharacterSheet() {
         </div>
       </div>
 
-      <div className="mt-8 text-center no-print space-x-4">
-        <button
-          onClick={() => document.getElementById("file-upload")?.click()}
-          className="bg-zinc-800 hover:bg-blue-900 text-white font-bold py-2 px-6 rounded border border-blue-800 transition-colors uppercase tracking-widest text-sm cursor-pointer"
-        >
-          Carica Dati
-        </button>
-        <input
-          type="file"
-          id="file-upload"
-          accept=".json"
-          className="hidden"
-          style={{ display: "none" }}
-          onChange={handleUpload}
-        />
-        <button
-          onClick={handleDownload}
-          className="bg-zinc-800 hover:bg-green-900 text-white font-bold py-2 px-6 rounded border border-green-800 transition-colors uppercase tracking-widest text-sm cursor-pointer"
-        >
-          Scarica Dati
-        </button>
-        {/* <button
-          onClick={() => window.print()}
-          className="bg-zinc-800 hover:bg-yellow-900 text-white font-bold py-2 px-6 rounded border border-yellow-800 transition-colors uppercase tracking-widest text-sm cursor-pointer"
-        >
-          Scarica PDF
-        </button> */}
-        <button
-          onClick={() => updateSheet(INITIAL_DATA)}
-          className="bg-zinc-800 hover:bg-red-900 text-white font-bold py-2 px-6 rounded border border-red-800 transition-colors uppercase tracking-widest text-sm cursor-pointer"
-        >
-          Reset
-        </button>
+      <div className="mt-8 text-center no-print flex flex-col items-center justify-center gap-4">
+        <div className="flex gap-4 flex-wrap justify-center">
+          <button
+            onClick={() => document.getElementById("file-upload")?.click()}
+            className="bg-zinc-800 hover:bg-blue-900 text-white font-bold py-2 px-6 rounded border border-blue-800 transition-colors uppercase tracking-widest text-sm cursor-pointer"
+          >
+            Carica Dati
+          </button>
+          <input
+            type="file"
+            id="file-upload"
+            accept=".json"
+            className="hidden"
+            style={{ display: "none" }}
+            onChange={handleUpload}
+          />
+          <button
+            onClick={handleDownload}
+            className="bg-zinc-800 hover:bg-green-900 text-white font-bold py-2 px-6 rounded border border-green-800 transition-colors uppercase tracking-widest text-sm cursor-pointer"
+          >
+            Scarica Dati
+          </button>
+          <button
+            onClick={() => updateSheet(INITIAL_DATA)}
+            className="bg-zinc-800 hover:bg-red-900 text-white font-bold py-2 px-6 rounded border border-red-800 transition-colors uppercase tracking-widest text-sm cursor-pointer"
+          >
+            Reset
+          </button>
+        </div>
+
+        <div className="border-t border-zinc-800 pt-4 w-full flex justify-center">
+          <PregeneratedLoader />
+        </div>
       </div>
     </div>
   );

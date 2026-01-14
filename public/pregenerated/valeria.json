@@ -1,0 +1,69 @@
+{
+  "info": {
+    "name": "Dr. Valeria Cioni",
+    "alias": "",
+    "profession": "Letterato"
+  },
+  "stats": {
+    "forza": 3,
+    "agilita": 3,
+    "spirito": 4,
+    "ingegno": 5
+  },
+  "skills": {
+    "prestanza": 0,
+    "resistenza": 0,
+    "rissa": 0,
+    "empatia": 0,
+    "intuizione": 0,
+    "percezione": 0,
+    "rituali": 0,
+    "movimento": 0,
+    "armi-da-fuoco": 0,
+    "furtivita": 0,
+    "gioco-di-mano": 0,
+    "medicina": 0,
+    "ingegneria": 0,
+    "investigazione": 0,
+    "occultismo": 0
+  },
+  "tracks": {
+    "maledetti": 0,
+    "salute": 4,
+    "stress": 6
+  },
+  "inventory": "Registratore vocale, fotocamera digitale, borsa medica da campo, diario di ricerca",
+  "weapons": ["Coltello multiuso"],
+  "talents": [
+    {
+      "name": "Traduttore arcano",
+      "level": 1,
+      "page": 0
+    },
+    {
+      "name": "Tecnico esperto",
+      "level": 1,
+      "page": 0
+    },
+    {
+      "name": "Mente acuta",
+      "level": 1,
+      "page": 0
+    },
+    {
+      "name": "",
+      "level": 0,
+      "page": 0
+    },
+    {
+      "name": "",
+      "level": 0,
+      "page": 0
+    },
+    {
+      "name": "",
+      "level": 0,
+      "page": 0
+    }
+  ]
+}

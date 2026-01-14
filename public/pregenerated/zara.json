@@ -1,0 +1,69 @@
+{
+  "info": {
+    "name": "Zara",
+    "alias": "",
+    "profession": "Occultista"
+  },
+  "stats": {
+    "forza": 2,
+    "agilita": 3,
+    "spirito": 5,
+    "ingegno": 4
+  },
+  "skills": {
+    "prestanza": 0,
+    "resistenza": 0,
+    "rissa": 0,
+    "empatia": 0,
+    "intuizione": 0,
+    "percezione": 0,
+    "rituali": 0,
+    "movimento": 0,
+    "armi-da-fuoco": 0,
+    "furtivita": 0,
+    "gioco-di-mano": 0,
+    "medicina": 0,
+    "ingegneria": 0,
+    "investigazione": 0,
+    "occultismo": 0
+  },
+  "tracks": {
+    "maledetti": 0,
+    "salute": 4,
+    "stress": 6
+  },
+  "inventory": "Mazzo di tarocchi antichi, cristalli, incenso, sciarpa di seta",
+  "weapons": ["Daga cerimoniale (Danno 1)", "Spray al peperoncino"],
+  "talents": [
+    {
+      "name": "Sensi oltre il velo",
+      "level": 1,
+      "page": 0
+    },
+    {
+      "name": "Fiuto per la menzogna",
+      "level": 1,
+      "page": 0
+    },
+    {
+      "name": "Colpo di fortuna",
+      "level": 1,
+      "page": 0
+    },
+    {
+      "name": "",
+      "level": 0,
+      "page": 0
+    },
+    {
+      "name": "",
+      "level": 0,
+      "page": 0
+    },
+    {
+      "name": "",
+      "level": 0,
+      "page": 0
+    }
+  ]
+}

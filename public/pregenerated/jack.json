@@ -1,0 +1,73 @@
+{
+  "info": {
+    "name": "Jack Mariano",
+    "alias": "",
+    "profession": "Cacciatore"
+  },
+  "stats": {
+    "forza": 5,
+    "agilita": 4,
+    "spirito": 3,
+    "ingegno": 3
+  },
+  "skills": {
+    "prestanza": 0,
+    "resistenza": 0,
+    "rissa": 0,
+    "empatia": 0,
+    "intuizione": 0,
+    "percezione": 0,
+    "rituali": 0,
+    "movimento": 0,
+    "armi-da-fuoco": 0,
+    "furtivita": 0,
+    "gioco-di-mano": 0,
+    "medicina": 0,
+    "ingegneria": 0,
+    "investigazione": 0,
+    "occultismo": 0
+  },
+  "tracks": {
+    "maledetti": 0,
+    "salute": 6,
+    "stress": 4
+  },
+  "inventory": "Fiaschetta di whisky, accendino zippo, benda per occhio di ricambio, torcia tattica",
+  "weapons": [
+    "Fucile a pompa (Danno 3)",
+    "Coltello da caccia (Danno 2)",
+    "Pugni (Danno 1)"
+  ],
+  "talents": [
+    {
+      "name": "Colpo mirato",
+      "level": 1,
+      "page": 0
+    },
+    {
+      "name": "Duemila cicatrici",
+      "level": 1,
+      "page": 0
+    },
+    {
+      "name": "Esperto in armi da fuoco",
+      "level": 1,
+      "page": 0
+    },
+    {
+      "name": "",
+      "level": 0,
+      "page": 0
+    },
+    {
+      "name": "",
+      "level": 0,
+      "page": 0
+    },
+    {
+      "name": "",
+      "level": 0,
+      "page": 0
+    }
+  ]
+}
