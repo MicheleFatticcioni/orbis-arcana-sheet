@@ -11,7 +11,7 @@ export default function Ability() {
         <div className="border-l-2 border-zinc-700 pl-4">
           <h3 className="text-zinc-500 text-sm mb-2">Forza</h3>
           <div className="space-y-2">
-            {["movimento", "resistenza", "rissa"].map((skill) => (
+            {["prestanza", "resistenza", "rissa"].map((skill) => (
               <div key={skill} className="flex justify-between items-center">
                 <span className="text-sm capitalize">{skill}</span>
                 <div className="w-12">
@@ -36,7 +36,7 @@ export default function Ability() {
         <div className="border-l-2 border-zinc-700 pl-4">
           <h3 className="text-zinc-500 text-sm mb-2">Agilità</h3>
           <div className="space-y-2">
-            {["armi-da-fuoco", "furtività", "gioco-di-mano"].map((skill) => (
+            {["armi-da-fuoco", "furtività", "gioco-di-mano", "movimento"].map((skill) => (
               <div key={skill} className="flex justify-between items-center">
                 <span className="text-sm capitalize">
                   {skill.replace(/-/g, " ")}
@@ -64,9 +64,9 @@ export default function Ability() {
 
         {/* VOL Skills */}
         <div className="border-l-2 border-zinc-700 pl-4">
-          <h3 className="text-zinc-500 text-sm mb-2">Volontà</h3>
+          <h3 className="text-zinc-500 text-sm mb-2">Spirito</h3>
           <div className="space-y-2">
-            {["empatia", "intuizione", "percezione", "rituali"].map((skill) => (
+            {["empatia", "intuizione", "investigazione", "rituali"].map((skill) => (
               <div key={skill} className="flex justify-between items-center">
                 <span className="text-sm capitalize">{skill}</span>
                 <div className="w-12">
@@ -92,7 +92,7 @@ export default function Ability() {
 
         {/* INT Skills */}
         <div className="border-l-2 border-zinc-700 pl-4">
-          <h3 className="text-zinc-500 text-sm mb-2">Intelligenza</h3>
+          <h3 className="text-zinc-500 text-sm mb-2">Ingeno</h3>
           <div className="space-y-2">
             {["informatica", "ingegneria", "investigazione", "occultismo"].map(
               (skill) => (

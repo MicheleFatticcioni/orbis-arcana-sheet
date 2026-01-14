@@ -10,7 +10,7 @@ export default function Attributes() {
     <div>
       <h2 className="section-header text-xl">Caratteristiche</h2>
       <div className="grid grid-cols-4 gap-4">
-        {["forza", "agilita", "volonta", "intelligenza"].map((stat) => (
+        {["forza", "agilita", "spirito", "ingegno"].map((stat) => (
           <div
             key={stat}
             className="stat-box p-4 flex flex-col items-center justify-center aspect-square rounded"

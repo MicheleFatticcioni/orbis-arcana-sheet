@@ -1,19 +1,20 @@
 import { CharacterData } from "../components/CharacterSheet";
 export const INITIAL_DATA: CharacterData = {
   info: { name: "", alias: "", profession: "" },
-  stats: { forza: 0, agilita: 0, volonta: 0, intelligenza: 0 },
+  stats: { forza: 0, agilita: 0, spirito: 0, ingegno: 0 },
   skills: {
-    movimento: 0,
+    prestanza: 0,
     resistenza: 0,
     rissa: 0,
     empatia: 0,
     intuizione: 0,
     percezione: 0,
     rituali: 0,
+    movimento: 0,
     "armi-da-fuoco": 0,
     furtivita: 0,
     "gioco-di-mano": 0,
-    informatica: 0,
+    medicina: 0,
     ingegneria: 0,
     investigazione: 0,
     occultismo: 0,

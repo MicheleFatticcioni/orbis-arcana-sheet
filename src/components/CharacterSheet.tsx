@@ -20,8 +20,8 @@ export interface CharacterData {
   stats: {
     forza: number;
     agilita: number;
-    volonta: number;
-    intelligenza: number;
+    spirito: number;
+    ingegno: number;
   };
   skills: {
     [key: string]: number;
