@@ -149,12 +149,12 @@ export default function CharacterSheet() {
         >
           Scarica Dati
         </button>
-        <button
+        {/* <button
           onClick={() => window.print()}
           className="bg-zinc-800 hover:bg-yellow-900 text-white font-bold py-2 px-6 rounded border border-yellow-800 transition-colors uppercase tracking-widest text-sm cursor-pointer"
         >
           Scarica PDF
-        </button>
+        </button> */}
         <button
           onClick={() => updateSheet(INITIAL_DATA)}
           className="bg-zinc-800 hover:bg-red-900 text-white font-bold py-2 px-6 rounded border border-red-800 transition-colors uppercase tracking-widest text-sm cursor-pointer"
