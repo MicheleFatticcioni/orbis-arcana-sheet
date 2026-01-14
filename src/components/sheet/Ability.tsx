@@ -1,8 +1,20 @@
+import { useState } from "react";
 import { useSheet, useUpdateSkills } from "@/src/stores/useSheetStore.state";
+import SkillRollModal from "./SkillRollModal";
 
 export default function Ability() {
   const sheet = useSheet();
   const updateSkill = useUpdateSkills();
+  const [selectedSkill, setSelectedSkill] = useState<string | null>(null);
+
+  const handleSkillClick = (skill: string) => {
+    setSelectedSkill(skill);
+  };
+
+  const getSkillValue = (skill: string) => {
+    return sheet.skills[skill as keyof typeof sheet.skills] || 0;
+  };
+
   return (
     <div>
       <h2 className="section-header text-xl">Abilità</h2>
@@ -13,7 +25,12 @@ export default function Ability() {
           <div className="space-y-2">
             {["prestanza", "resistenza", "rissa"].map((skill) => (
               <div key={skill} className="flex justify-between items-center">
-                <span className="text-sm capitalize">{skill}</span>
+                <span
+                  className="text-sm capitalize cursor-pointer hover:text-white transition-colors"
+                  onClick={() => handleSkillClick(skill)}
+                >
+                  {skill}
+                </span>
                 <div className="w-12">
                   <input
                     type="number"
@@ -36,29 +53,34 @@ export default function Ability() {
         <div className="border-l-2 border-zinc-700 pl-4">
           <h3 className="text-zinc-500 text-sm mb-2">Agilità</h3>
           <div className="space-y-2">
-            {["armi-da-fuoco", "furtività", "gioco-di-mano", "movimento"].map((skill) => (
-              <div key={skill} className="flex justify-between items-center">
-                <span className="text-sm capitalize">
-                  {skill.replace(/-/g, " ")}
-                </span>
-                <div className="w-12">
-                  <input
-                    type="number"
-                    className="w-12 text-right"
-                    placeholder="0"
-                    value={
-                      sheet.skills[skill as keyof typeof sheet.skills] || 0
-                    }
-                    onChange={(e) =>
-                      updateSkill(
-                        skill as keyof typeof sheet.skills,
-                        parseInt(e.target.value) || 0
-                      )
-                    }
-                  />
+            {["armi-da-fuoco", "furtività", "gioco-di-mano", "movimento"].map(
+              (skill) => (
+                <div key={skill} className="flex justify-between items-center">
+                  <span
+                    className="text-sm capitalize cursor-pointer hover:text-white transition-colors"
+                    onClick={() => handleSkillClick(skill)}
+                  >
+                    {skill.replace(/-/g, " ")}
+                  </span>
+                  <div className="w-12">
+                    <input
+                      type="number"
+                      className="w-12 text-right"
+                      placeholder="0"
+                      value={
+                        sheet.skills[skill as keyof typeof sheet.skills] || 0
+                      }
+                      onChange={(e) =>
+                        updateSkill(
+                          skill as keyof typeof sheet.skills,
+                          parseInt(e.target.value) || 0
+                        )
+                      }
+                    />
+                  </div>
                 </div>
-              </div>
-            ))}
+              )
+            )}
           </div>
         </div>
 
@@ -66,27 +88,34 @@ export default function Ability() {
         <div className="border-l-2 border-zinc-700 pl-4">
           <h3 className="text-zinc-500 text-sm mb-2">Spirito</h3>
           <div className="space-y-2">
-            {["empatia", "intuizione", "investigazione", "rituali"].map((skill) => (
-              <div key={skill} className="flex justify-between items-center">
-                <span className="text-sm capitalize">{skill}</span>
-                <div className="w-12">
-                  <input
-                    type="number"
-                    className="w-12 text-right"
-                    placeholder="0"
-                    value={
-                      sheet.skills[skill as keyof typeof sheet.skills] || 0
-                    }
-                    onChange={(e) =>
-                      updateSkill(
-                        skill as keyof typeof sheet.skills,
-                        parseInt(e.target.value) || 0
-                      )
-                    }
-                  />
+            {["empatia", "intuizione", "investigazione", "rituali"].map(
+              (skill) => (
+                <div key={skill} className="flex justify-between items-center">
+                  <span
+                    className="text-sm capitalize cursor-pointer hover:text-white transition-colors"
+                    onClick={() => handleSkillClick(skill)}
+                  >
+                    {skill}
+                  </span>
+                  <div className="w-12">
+                    <input
+                      type="number"
+                      className="w-12 text-right"
+                      placeholder="0"
+                      value={
+                        sheet.skills[skill as keyof typeof sheet.skills] || 0
+                      }
+                      onChange={(e) =>
+                        updateSkill(
+                          skill as keyof typeof sheet.skills,
+                          parseInt(e.target.value) || 0
+                        )
+                      }
+                    />
+                  </div>
                 </div>
-              </div>
-            ))}
+              )
+            )}
           </div>
         </div>
 
@@ -97,7 +126,12 @@ export default function Ability() {
             {["informatica", "ingegneria", "investigazione", "occultismo"].map(
               (skill) => (
                 <div key={skill} className="flex justify-between items-center">
-                  <span className="text-sm capitalize">{skill}</span>
+                  <span
+                    className="text-sm capitalize cursor-pointer hover:text-white transition-colors"
+                    onClick={() => handleSkillClick(skill)}
+                  >
+                    {skill}
+                  </span>
                   <div className="w-12">
                     <input
                       type="number"
@@ -120,6 +154,13 @@ export default function Ability() {
           </div>
         </div>
       </div>
+
+      <SkillRollModal
+        isOpen={!!selectedSkill}
+        onClose={() => setSelectedSkill(null)}
+        skillName={selectedSkill?.replace(/-/g, " ") || ""}
+        skillValue={selectedSkill ? getSkillValue(selectedSkill) : 0}
+      />
     </div>
   );
 }
