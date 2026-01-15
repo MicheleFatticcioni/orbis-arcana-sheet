@@ -27,6 +27,7 @@ export default function SkillRollModal({
   const [skillRollResults, setSkillRollResults] = useState<number[]>([]);
   const [negativeRolls, setNegativeRolls] = useState<number[]>([]);
   const [totalSuccess, setTotalSuccess] = useState<number>(0);
+  const [isForceRoll, setIsForceRoll] = useState<boolean>(false);
 
   if (!isOpen) return null;
 
@@ -59,16 +60,45 @@ export default function SkillRollModal({
     setTotalSuccess(totalSuccess);
   };
 
+  const handleForceRoll = () => {
+    const reroll = (rolls: number[]) =>
+      rolls.map((roll) => {
+        if (roll === 1 || roll === 6) return roll; // Keep 1s and 6s
+        return Math.floor(Math.random() * 6) + 1; // Reroll others
+      });
+
+    const newAttributeRollResults = reroll(attributeRollResults);
+    const newSkillRollResults = reroll(skillRollResults);
+    const newNegativeRolls = reroll(negativeRolls);
+
+    setAttributeRollResults(newAttributeRollResults);
+    setSkillRollResults(newSkillRollResults);
+    setNegativeRolls(newNegativeRolls);
+    setIsForceRoll(true);
+
+    const totalSuccess =
+      newSkillRollResults.filter((roll) => roll == 6).length +
+      newAttributeRollResults.filter((roll) => roll == 6).length -
+      newNegativeRolls.filter((roll) => roll == 6).length;
+
+    setTotalSuccess(totalSuccess);
+  };
+
   const handleClose = () => {
     onClose();
     setModifier(0); // Reset after roll
+    setAttributeRollResults([]);
+    setSkillRollResults([]);
+    setNegativeRolls([]);
+    setTotalSuccess(0);
+    setIsForceRoll(false);
   };
 
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/80">
       <div className="bg-zinc-900 border border-zinc-700 p-6 rounded-lg shadow-xl w-full max-w-sm relative">
         <button
-          onClick={onClose}
+          onClick={handleClose}
           className="absolute top-2 right-2 text-zinc-400 hover:text-white"
         >
           ✕
@@ -191,6 +221,14 @@ export default function SkillRollModal({
                 </div>
               </div>
             )}
+
+            <button
+              onClick={handleForceRoll}
+              disabled={isForceRoll}
+              className="w-full bg-amber-700 hover:bg-amber-600 text-white font-bold py-2 rounded disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:bg-amber-700 uppercase tracking-widest transition-colors mt-4 text-sm"
+            >
+              Forza il tiro
+            </button>
           </div>
         )}
       </div>
