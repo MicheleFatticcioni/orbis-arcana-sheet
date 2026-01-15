@@ -1,6 +1,7 @@
 "use client";
 
 import React, { useState } from "react";
+import Image from "next/image";
 
 interface SkillRollModalProps {
   isOpen: boolean;
@@ -115,6 +116,83 @@ export default function SkillRollModal({
             Tira
           </button>
         </div>
+
+        {(attributeRollResults.length > 0 || skillRollResults.length > 0) && (
+          <div className="mt-6 space-y-4 border-t border-zinc-700 pt-4">
+            {/* Risultato Totale */}
+            <div className="text-center bg-zinc-800 p-3 rounded-lg border border-zinc-600">
+              <span className="block text-zinc-400 text-xs uppercase tracking-widest mb-1">
+                Totale Successi
+              </span>
+              <span className="text-4xl font-bold text-white">
+                {totalSuccess}
+              </span>
+            </div>
+
+            {/* Dadi Attributo */}
+            {attributeRollResults.length > 0 && (
+              <div>
+                <p className="text-xs text-zinc-500 uppercase tracking-wider mb-2">
+                  {attributeName} ({attributeRollResults.length})
+                </p>
+                <div className="flex flex-wrap gap-2">
+                  {attributeRollResults.map((result, i) => (
+                    <Image
+                      key={`attr-${i}`}
+                      src={`/dice/attribute/black-dice-${result}.png`}
+                      alt={`Dado ${result}`}
+                      width={40}
+                      height={40}
+                      className="object-contain"
+                    />
+                  ))}
+                </div>
+              </div>
+            )}
+
+            {/* Dadi Abilità */}
+            {skillRollResults.length > 0 && (
+              <div>
+                <p className="text-xs text-zinc-500 uppercase tracking-wider mb-2">
+                  {skillName} ({skillRollResults.length})
+                </p>
+                <div className="flex flex-wrap gap-2">
+                  {skillRollResults.map((result, i) => (
+                    <Image
+                      key={`skill-${i}`}
+                      src={`/dice/ability/red-dice-${result}.png`}
+                      alt={`Dado ${result}`}
+                      width={40}
+                      height={40}
+                      className="object-contain"
+                    />
+                  ))}
+                </div>
+              </div>
+            )}
+
+            {/* Dadi Modificatore Negativo (se presenti) */}
+            {negativeRolls.length > 0 && (
+              <div>
+                <p className="text-xs text-red-400 uppercase tracking-wider mb-2">
+                  Malus ({negativeRolls.length})
+                </p>
+                <div className="flex flex-wrap gap-2 opacity-80">
+                  {negativeRolls.map((result, i) => (
+                    <Image
+                      key={`neg-${i}`}
+                      src={`/dice/ability/red-dice-${result}.png`}
+                      alt={`Dado ${result}`}
+                      width={40}
+                      height={40}
+                      className="object-contain hue-rotate-180 grayscale-[0.5]"
+                    />
+                  ))}
+                </div>
+              </div>
+            )}
+          </div>
+        )}
       </div>
     </div>
   );
