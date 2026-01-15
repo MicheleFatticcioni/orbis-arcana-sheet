@@ -7,6 +7,8 @@ interface SkillRollModalProps {
   onClose: () => void;
   skillName: string;
   skillValue: number;
+  attributeName: string;
+  attributeValue: number;
 }
 
 export default function SkillRollModal({
@@ -14,24 +16,49 @@ export default function SkillRollModal({
   onClose,
   skillName,
   skillValue,
+  attributeName,
+  attributeValue,
 }: SkillRollModalProps) {
   const [modifier, setModifier] = useState<number>(0);
+  const [attributeRollResults, setAttributeRollResults] = useState<number[]>(
+    []
+  );
+  const [skillRollResults, setSkillRollResults] = useState<number[]>([]);
+  const [negativeRolls, setNegativeRolls] = useState<number[]>([]);
+  const [totalSuccess, setTotalSuccess] = useState<number>(0);
 
   if (!isOpen) return null;
 
   const handleRoll = () => {
     // For now, simple alert. Logic can be expanded later.
-    const roll = Math.floor(Math.random() * 10) + 1;
-    const total = roll + skillValue + modifier;
-    alert(
-      `Tiro su ${skillName.toUpperCase()}:
-      
-Dado: ${roll}
-Abilità: ${skillValue}
-Modificatore: ${modifier}
-
-TOTALE: ${total}`
+    const attributeRollResults = Array.from(
+      { length: attributeValue },
+      () => Math.floor(Math.random() * 6) + 1
     );
+
+    const skillRollResults = Array.from(
+      { length: skillValue + (modifier > 0 ? modifier : 0) },
+      () => Math.floor(Math.random() * 6) + 1
+    );
+
+    const negativeRolls = Array.from(
+      { length: modifier < 0 ? modifier * -1 : 0 },
+      () => Math.floor(Math.random() * 6) + 1
+    );
+
+    setAttributeRollResults(attributeRollResults);
+    setSkillRollResults(skillRollResults);
+    setNegativeRolls(negativeRolls);
+
+    const totalSuccess =
+      skillRollResults.filter((roll) => roll == 6).length +
+      attributeRollResults.filter((roll) => roll == 6).length -
+      negativeRolls.filter((roll) => roll == 6).length;
+
+    setTotalSuccess(totalSuccess);
+  };
+
+  const handleClose = () => {
     onClose();
     setModifier(0); // Reset after roll
   };
@@ -49,7 +76,10 @@ TOTALE: ${total}`
         <h3 className="text-xl font-bold text-center mb-4 text-white uppercase tracking-wider">
           {skillName}
           <span className="block text-sm text-zinc-500 normal-case mt-1">
-            Valore Base: {skillValue}
+            {attributeName}: {attributeValue}
+          </span>
+          <span className="block text-sm text-zinc-500 normal-case mt-1">
+            {skillName}: {skillValue}
           </span>
         </h3>
 

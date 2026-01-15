@@ -6,13 +6,21 @@ export default function Ability() {
   const sheet = useSheet();
   const updateSkill = useUpdateSkills();
   const [selectedSkill, setSelectedSkill] = useState<string | null>(null);
+  const [selectedAttribute, setSelectedAttribute] = useState<string | null>(
+    null
+  );
 
-  const handleSkillClick = (skill: string) => {
+  const handleSkillClick = (skill: string, attribute: string) => {
     setSelectedSkill(skill);
+    setSelectedAttribute(attribute);
   };
 
   const getSkillValue = (skill: string) => {
     return sheet.skills[skill as keyof typeof sheet.skills] || 0;
+  };
+
+  const getAttributeValue = (attribute: string) => {
+    return sheet.stats[attribute as keyof typeof sheet.stats] || 0;
   };
 
   return (
@@ -27,7 +35,7 @@ export default function Ability() {
               <div key={skill} className="flex justify-between items-center">
                 <span
                   className="text-sm capitalize cursor-pointer hover:text-white transition-colors"
-                  onClick={() => handleSkillClick(skill)}
+                  onClick={() => handleSkillClick(skill, "forza")}
                 >
                   {skill}
                 </span>
@@ -58,7 +66,7 @@ export default function Ability() {
                 <div key={skill} className="flex justify-between items-center">
                   <span
                     className="text-sm capitalize cursor-pointer hover:text-white transition-colors"
-                    onClick={() => handleSkillClick(skill)}
+                    onClick={() => handleSkillClick(skill, "agilita")}
                   >
                     {skill.replace(/-/g, " ")}
                   </span>
@@ -93,7 +101,7 @@ export default function Ability() {
                 <div key={skill} className="flex justify-between items-center">
                   <span
                     className="text-sm capitalize cursor-pointer hover:text-white transition-colors"
-                    onClick={() => handleSkillClick(skill)}
+                    onClick={() => handleSkillClick(skill, "spirito")}
                   >
                     {skill}
                   </span>
@@ -128,7 +136,7 @@ export default function Ability() {
                 <div key={skill} className="flex justify-between items-center">
                   <span
                     className="text-sm capitalize cursor-pointer hover:text-white transition-colors"
-                    onClick={() => handleSkillClick(skill)}
+                    onClick={() => handleSkillClick(skill, "ingeno")}
                   >
                     {skill}
                   </span>
@@ -156,10 +164,17 @@ export default function Ability() {
       </div>
 
       <SkillRollModal
-        isOpen={!!selectedSkill}
-        onClose={() => setSelectedSkill(null)}
+        isOpen={!!selectedSkill && !!selectedAttribute}
+        onClose={() => {
+          setSelectedSkill(null);
+          setSelectedAttribute(null);
+        }}
         skillName={selectedSkill?.replace(/-/g, " ") || ""}
         skillValue={selectedSkill ? getSkillValue(selectedSkill) : 0}
+        attributeName={selectedAttribute?.replace(/-/g, " ") || ""}
+        attributeValue={
+          selectedAttribute ? getAttributeValue(selectedAttribute) : 0
+        }
       />
     </div>
   );
