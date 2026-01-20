@@ -129,7 +129,7 @@ export default function Ability() {
 
         {/* INT Skills */}
         <div className="border-l-2 border-zinc-700 pl-4">
-          <h3 className="text-zinc-500 text-sm mb-2">Ingeno</h3>
+          <h3 className="text-zinc-500 text-sm mb-2">Ingegno</h3>
           <div className="space-y-2">
             {["medicina", "ingegneria", "percezione", "occultismo"].map(
               (skill) => (
