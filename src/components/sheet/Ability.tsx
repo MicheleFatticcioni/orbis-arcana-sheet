@@ -136,7 +136,7 @@ export default function Ability() {
                 <div key={skill} className="flex justify-between items-center">
                   <span
                     className="text-sm capitalize cursor-pointer hover:text-white transition-colors"
-                    onClick={() => handleSkillClick(skill, "ingeno")}
+                    onClick={() => handleSkillClick(skill, "ingegno")}
                   >
                     {skill}
                   </span>
