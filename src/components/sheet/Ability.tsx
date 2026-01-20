@@ -7,7 +7,7 @@ export default function Ability() {
   const updateSkill = useUpdateSkills();
   const [selectedSkill, setSelectedSkill] = useState<string | null>(null);
   const [selectedAttribute, setSelectedAttribute] = useState<string | null>(
-    null
+    null,
   );
 
   const handleSkillClick = (skill: string, attribute: string) => {
@@ -81,13 +81,13 @@ export default function Ability() {
                       onChange={(e) =>
                         updateSkill(
                           skill as keyof typeof sheet.skills,
-                          parseInt(e.target.value) || 0
+                          parseInt(e.target.value) || 0,
                         )
                       }
                     />
                   </div>
                 </div>
-              )
+              ),
             )}
           </div>
         </div>
@@ -116,13 +116,13 @@ export default function Ability() {
                       onChange={(e) =>
                         updateSkill(
                           skill as keyof typeof sheet.skills,
-                          parseInt(e.target.value) || 0
+                          parseInt(e.target.value) || 0,
                         )
                       }
                     />
                   </div>
                 </div>
-              )
+              ),
             )}
           </div>
         </div>
@@ -131,7 +131,7 @@ export default function Ability() {
         <div className="border-l-2 border-zinc-700 pl-4">
           <h3 className="text-zinc-500 text-sm mb-2">Ingeno</h3>
           <div className="space-y-2">
-            {["informatica", "ingegneria", "investigazione", "occultismo"].map(
+            {["medicina", "ingegneria", "percezione", "occultismo"].map(
               (skill) => (
                 <div key={skill} className="flex justify-between items-center">
                   <span
@@ -151,13 +151,13 @@ export default function Ability() {
                       onChange={(e) =>
                         updateSkill(
                           skill as keyof typeof sheet.skills,
-                          parseInt(e.target.value) || 0
+                          parseInt(e.target.value) || 0,
                         )
                       }
                     />
                   </div>
                 </div>
-              )
+              ),
             )}
           </div>
         </div>
@@ -175,6 +175,7 @@ export default function Ability() {
         attributeValue={
           selectedAttribute ? getAttributeValue(selectedAttribute) : 0
         }
+        cursedValue={sheet.tracks.maledetti || 0}
       />
     </div>
   );

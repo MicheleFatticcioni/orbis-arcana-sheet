@@ -10,6 +10,7 @@ interface SkillRollModalProps {
   skillValue: number;
   attributeName: string;
   attributeValue: number;
+  cursedValue: number;
 }
 
 export default function SkillRollModal({
@@ -19,12 +20,15 @@ export default function SkillRollModal({
   skillValue,
   attributeName,
   attributeValue,
+  cursedValue,
 }: SkillRollModalProps) {
   const [modifier, setModifier] = useState<number>(0);
+  const [isCursed, setIsCursed] = useState<boolean>(false);
   const [attributeRollResults, setAttributeRollResults] = useState<number[]>(
-    []
+    [],
   );
   const [skillRollResults, setSkillRollResults] = useState<number[]>([]);
+  const [cursedRollResults, setCursedRollResults] = useState<number[]>([]);
   const [negativeRolls, setNegativeRolls] = useState<number[]>([]);
   const [totalSuccess, setTotalSuccess] = useState<number>(0);
   const [isForceRoll, setIsForceRoll] = useState<boolean>(false);
@@ -35,26 +39,35 @@ export default function SkillRollModal({
     // For now, simple alert. Logic can be expanded later.
     const attributeRollResults = Array.from(
       { length: attributeValue },
-      () => Math.floor(Math.random() * 6) + 1
+      () => Math.floor(Math.random() * 6) + 1,
     );
 
     const skillRollResults = Array.from(
       { length: skillValue + (modifier > 0 ? modifier : 0) },
-      () => Math.floor(Math.random() * 6) + 1
+      () => Math.floor(Math.random() * 6) + 1,
     );
 
     const negativeRolls = Array.from(
       { length: modifier < 0 ? modifier * -1 : 0 },
-      () => Math.floor(Math.random() * 6) + 1
+      () => Math.floor(Math.random() * 6) + 1,
     );
+
+    const cursedRollResults = isCursed
+      ? Array.from(
+          { length: cursedValue },
+          () => Math.floor(Math.random() * 6) + 1,
+        )
+      : [];
 
     setAttributeRollResults(attributeRollResults);
     setSkillRollResults(skillRollResults);
     setNegativeRolls(negativeRolls);
+    setCursedRollResults(cursedRollResults);
 
     const totalSuccess =
       skillRollResults.filter((roll) => roll == 6).length +
-      attributeRollResults.filter((roll) => roll == 6).length -
+      attributeRollResults.filter((roll) => roll == 6).length +
+      cursedRollResults.filter((roll) => roll == 6).length -
       negativeRolls.filter((roll) => roll == 6).length;
 
     setTotalSuccess(totalSuccess);
@@ -70,15 +83,18 @@ export default function SkillRollModal({
     const newAttributeRollResults = reroll(attributeRollResults);
     const newSkillRollResults = reroll(skillRollResults);
     const newNegativeRolls = reroll(negativeRolls);
+    const newCursedRollResults = reroll(cursedRollResults);
 
     setAttributeRollResults(newAttributeRollResults);
     setSkillRollResults(newSkillRollResults);
     setNegativeRolls(newNegativeRolls);
+    setCursedRollResults(newCursedRollResults);
     setIsForceRoll(true);
 
     const totalSuccess =
       newSkillRollResults.filter((roll) => roll == 6).length +
-      newAttributeRollResults.filter((roll) => roll == 6).length -
+      newAttributeRollResults.filter((roll) => roll == 6).length +
+      newCursedRollResults.filter((roll) => roll == 6).length -
       newNegativeRolls.filter((roll) => roll == 6).length;
 
     setTotalSuccess(totalSuccess);
@@ -89,9 +105,11 @@ export default function SkillRollModal({
     setModifier(0); // Reset after roll
     setAttributeRollResults([]);
     setSkillRollResults([]);
+    setCursedRollResults([]);
     setNegativeRolls([]);
     setTotalSuccess(0);
     setIsForceRoll(false);
+    setIsCursed(false);
   };
 
   return (
@@ -139,22 +157,48 @@ export default function SkillRollModal({
             </div>
           </div>
 
+          {cursedValue > 0 && (
+            <div
+              className="flex items-center gap-2 bg-zinc-800 p-2 rounded cursor-pointer"
+              onClick={() => setIsCursed(!isCursed)}
+            >
+              <div
+                className={`w-4 h-4 rounded border ${isCursed ? "bg-purple-900 border-purple-500" : "border-zinc-500"} flex items-center justify-center transition-colors`}
+              >
+                {isCursed && (
+                  <div className="w-2 h-2 bg-purple-300 rounded-sm" />
+                )}
+              </div>
+              <span
+                className={`text-sm ${isCursed ? "text-purple-300" : "text-zinc-400"}`}
+              >
+                Tiro Maledetto ({cursedValue})
+              </span>
+            </div>
+          )}
+
           <button
             onClick={handleRoll}
-            className="w-full bg-blue-900 hover:bg-blue-800 text-white font-bold py-3 rounded uppercase tracking-widest transition-colors mt-2"
+            className={`w-full font-bold py-3 rounded uppercase tracking-widest transition-colors mt-2 ${isCursed ? "bg-purple-900 hover:bg-purple-800 text-white" : "bg-blue-900 hover:bg-blue-800 text-white"}`}
           >
             Tira
           </button>
         </div>
 
-        {(attributeRollResults.length > 0 || skillRollResults.length > 0) && (
+        {(attributeRollResults.length > 0 ||
+          skillRollResults.length > 0 ||
+          cursedRollResults.length > 0) && (
           <div className="mt-6 space-y-4 border-t border-zinc-700 pt-4">
             {/* Risultato Totale */}
-            <div className="text-center bg-zinc-800 p-3 rounded-lg border border-zinc-600">
+            <div
+              className={`text-center p-3 rounded-lg border ${totalSuccess >= 0 ? "bg-zinc-800 border-zinc-600" : "bg-red-900/20 border-red-800"}`}
+            >
               <span className="block text-zinc-400 text-xs uppercase tracking-widest mb-1">
                 Totale Successi
               </span>
-              <span className="text-4xl font-bold text-white">
+              <span
+                className={`text-4xl font-bold ${totalSuccess >= 0 ? "text-white" : "text-red-400"}`}
+              >
                 {totalSuccess}
               </span>
             </div>
@@ -195,6 +239,27 @@ export default function SkillRollModal({
                       width={40}
                       height={40}
                       className="object-contain"
+                    />
+                  ))}
+                </div>
+              </div>
+            )}
+
+            {/* Dadi Maledetti */}
+            {cursedRollResults.length > 0 && (
+              <div>
+                <p className="text-xs text-purple-400 uppercase tracking-wider mb-2">
+                  Maledetti ({cursedRollResults.length})
+                </p>
+                <div className="flex flex-wrap gap-2">
+                  {cursedRollResults.map((result, i) => (
+                    <Image
+                      key={`cursed-${i}`}
+                      src={`/dice/ability/red-dice-${result}.png`}
+                      alt={`Dado ${result}`}
+                      width={40}
+                      height={40}
+                      className="object-contain hue-rotate-[260deg] contrast-125"
                     />
                   ))}
                 </div>
