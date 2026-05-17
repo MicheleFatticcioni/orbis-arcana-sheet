@@ -121,11 +121,14 @@ export default function CharacterSheet() {
           <Points />
           {/* DOTI */}
           <Talents />
-        </div>
-        <div className="lg:col-span-12 space-y-8 break-inside-avoid">
           {/* ARMI */}
           <Wapons />
         </div>
+        {/*
+          <div className="lg:col-span-12 space-y-8 break-inside-avoid">
+            <Wapons />
+          </div>
+        */}
       </div>
 
       <div className="mt-8 text-center no-print flex flex-col items-center justify-center gap-4">

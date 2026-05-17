@@ -96,34 +96,32 @@ export default function Ability() {
         <div className="border-l-2 border-zinc-700 pl-4">
           <h3 className="text-zinc-500 text-sm mb-2">Spirito</h3>
           <div className="space-y-2">
-            {["empatia", "intuizione", "investigazione", "rituali"].map(
-              (skill) => (
-                <div key={skill} className="flex justify-between items-center">
-                  <span
-                    className="text-sm capitalize cursor-pointer hover:text-white transition-colors"
-                    onClick={() => handleSkillClick(skill, "spirito")}
-                  >
-                    {skill}
-                  </span>
-                  <div className="w-12">
-                    <input
-                      type="number"
-                      className="w-12 text-right"
-                      placeholder="0"
-                      value={
-                        sheet.skills[skill as keyof typeof sheet.skills] || 0
-                      }
-                      onChange={(e) =>
-                        updateSkill(
-                          skill as keyof typeof sheet.skills,
-                          parseInt(e.target.value) || 0,
-                        )
-                      }
-                    />
-                  </div>
+            {["empatia", "intuizione", "percezione", "rituali"].map((skill) => (
+              <div key={skill} className="flex justify-between items-center">
+                <span
+                  className="text-sm capitalize cursor-pointer hover:text-white transition-colors"
+                  onClick={() => handleSkillClick(skill, "spirito")}
+                >
+                  {skill}
+                </span>
+                <div className="w-12">
+                  <input
+                    type="number"
+                    className="w-12 text-right"
+                    placeholder="0"
+                    value={
+                      sheet.skills[skill as keyof typeof sheet.skills] || 0
+                    }
+                    onChange={(e) =>
+                      updateSkill(
+                        skill as keyof typeof sheet.skills,
+                        parseInt(e.target.value) || 0,
+                      )
+                    }
+                  />
                 </div>
-              ),
-            )}
+              </div>
+            ))}
           </div>
         </div>
 
@@ -131,7 +129,7 @@ export default function Ability() {
         <div className="border-l-2 border-zinc-700 pl-4">
           <h3 className="text-zinc-500 text-sm mb-2">Ingegno</h3>
           <div className="space-y-2">
-            {["medicina", "ingegneria", "percezione", "occultismo"].map(
+            {["medicina", "ingegneria", "investigazione", "occultismo"].map(
               (skill) => (
                 <div key={skill} className="flex justify-between items-center">
                   <span
