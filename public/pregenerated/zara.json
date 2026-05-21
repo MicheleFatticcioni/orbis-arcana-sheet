@@ -14,10 +14,10 @@
     "prestanza": 0,
     "resistenza": 0,
     "rissa": 0,
-    "empatia": 0,
-    "intuizione": 0,
-    "percezione": 0,
-    "rituali": 0,
+    "empatia": 1,
+    "intuizione": 1,
+    "percezione": 1,
+    "rituali": 2,
     "movimento": 0,
     "armi-da-fuoco": 0,
     "furtivita": 0,
@@ -25,15 +25,15 @@
     "medicina": 0,
     "ingegneria": 0,
     "investigazione": 0,
-    "occultismo": 0
+    "occultismo": 3
   },
   "tracks": {
     "maledetti": 0,
-    "salute": 4,
+    "salute": 5,
     "stress": 6
   },
-  "inventory": "Mazzo di tarocchi antichi, cristalli, incenso, sciarpa di seta",
-  "weapons": ["Daga cerimoniale (Danno 1)", "Spray al peperoncino"],
+  "inventory": "Mazzo di tarocchi antichi, cristalli, incenso, sciarpa di seta, sale",
+  "weapons": ["Pugnale (Danno 1)", "Spray al peperoncino (1 danno)"],
   "talents": [
     {
       "name": "Sensi oltre il velo",

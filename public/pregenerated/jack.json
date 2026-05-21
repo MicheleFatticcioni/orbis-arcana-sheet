@@ -6,9 +6,9 @@
   },
   "stats": {
     "forza": 5,
-    "agilita": 4,
+    "agilita": 2,
     "spirito": 3,
-    "ingegno": 3
+    "ingegno": 2
   },
   "skills": {
     "prestanza": 0,
@@ -24,19 +24,19 @@
     "gioco-di-mano": 0,
     "medicina": 0,
     "ingegneria": 0,
-    "investigazione": 0,
+    "investigazione": 1,
     "occultismo": 0
   },
   "tracks": {
     "maledetti": 0,
-    "salute": 6,
+    "salute": 5,
     "stress": 4
   },
   "inventory": "Fiaschetta di whisky, accendino zippo, benda per occhio di ricambio, torcia tattica",
   "weapons": [
     "Fucile a pompa (Danno 3)",
     "Coltello da caccia (Danno 2)",
-    "Pugni (Danno 1)"
+    "Colt (Danno 2)"
   ],
   "talents": [
     {

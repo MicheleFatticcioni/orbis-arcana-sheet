@@ -11,6 +11,7 @@ import Wapons from "./sheet/Wapons";
 import PregeneratedLoader from "./sheet/PregeneratedLoader";
 import { INITIAL_DATA } from "../constant/initialData";
 import { useSheet, useUpdateSheet } from "../stores/useSheetStore.state";
+import { downloadSheetAsPDF } from "../utils/pdfExport";
 
 export interface CharacterData {
   info: {
@@ -88,6 +89,15 @@ export default function CharacterSheet() {
     reader.readAsText(file);
   };
 
+  const handlePrintPDF = async () => {
+    try {
+      await downloadSheetAsPDF(sheet);
+    } catch (error) {
+      console.error("Errore durante la generazione del PDF:", error);
+      alert("Errore durante la generazione del PDF");
+    }
+  };
+
   return (
     <div className="w-full max-w-6xl bg-zinc-900 p-6 md:p-10 shadow-2xl border border-zinc-800 relative">
       {/* Header / Info Base */}
@@ -152,6 +162,12 @@ export default function CharacterSheet() {
             className="bg-zinc-800 hover:bg-green-900 text-white font-bold py-2 px-6 rounded border border-green-800 transition-colors uppercase tracking-widest text-sm cursor-pointer"
           >
             Scarica Dati
+          </button>
+          <button
+            onClick={handlePrintPDF}
+            className="bg-zinc-800 hover:bg-purple-900 text-white font-bold py-2 px-6 rounded border border-purple-800 transition-colors uppercase tracking-widest text-sm cursor-pointer"
+          >
+            Scarica PDF
           </button>
           <button
             onClick={() => updateSheet(INITIAL_DATA)}

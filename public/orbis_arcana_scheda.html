@@ -1,0 +1,573 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Orbis Arcana – Scheda del Personaggio</title>
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700&family=Share+Tech+Mono&family=Raleway:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+  :root {
+    --red:       #a01818;
+    --purple:    #5b1db8;
+    --dark:      #111111;
+    --mid:       #333333;
+    --muted:     #555555;
+    --faint:     #888888;
+    --border:    #aaaaaa;
+    --border-lt: #d8d8d8;
+    --bg:        #ffffff;
+    --bg-tint:   #f5f5f5;
+    --bg-panel:  #ebebeb;
+
+    --fs-label:   7.5pt;
+    --fs-body:    9pt;
+    --fs-val:     9.5pt;
+    --fs-section: 10.5pt;
+    --fs-stat:    22pt;
+  }
+
+  body {
+    background: #d0d0d0;
+    font-family: 'Raleway', sans-serif;
+    color: var(--dark);
+    -webkit-print-color-adjust: exact;
+    print-color-adjust: exact;
+  }
+
+  /* ─────────────────── PAGE ─────────────────── */
+  .page {
+    width: 210mm;
+    min-height: 297mm;
+    background: var(--bg);
+    margin: 16px auto;
+    padding: 9mm 10mm;
+    box-shadow: 0 4px 40px rgba(0,0,0,0.22);
+  }
+
+  /* ─────────────────── HEADER ─────────────────── */
+  .header {
+    text-align: center;
+    padding-bottom: 4mm;
+    border-bottom: 2.5px solid var(--red);
+    margin-bottom: 5mm;
+  }
+  .header h1 {
+    font-family: 'Cinzel', serif;
+    font-size: 22pt;
+    font-weight: 700;
+    letter-spacing: 0.22em;
+    color: var(--dark);
+    line-height: 1;
+  }
+  .header .subtitle {
+    font-family: 'Share Tech Mono', monospace;
+    font-size: 7.5pt;
+    letter-spacing: 0.38em;
+    color: var(--faint);
+    margin-top: 1.5mm;
+    text-transform: uppercase;
+  }
+
+  /* ─────────────────── IDENTITY ─────────────────── */
+  .identity-row {
+    display: grid;
+    grid-template-columns: 2fr 2fr 1.4fr;
+    gap: 5mm;
+    margin-bottom: 5mm;
+  }
+  .field {
+    border-bottom: 1.5px solid var(--border);
+    padding-bottom: 2mm;
+  }
+  .field-label {
+    font-family: 'Share Tech Mono', monospace;
+    font-size: var(--fs-label);
+    letter-spacing: 0.22em;
+    color: var(--faint);
+    text-transform: uppercase;
+    margin-bottom: 1.5mm;
+  }
+  .field-value {
+    font-family: 'Share Tech Mono', monospace;
+    font-size: var(--fs-body);
+    color: var(--muted);
+    min-height: 5.5mm;
+  }
+
+  /* ─────────────────── SECTION TITLE ─────────────────── */
+  .section-title {
+    font-family: 'Cinzel', serif;
+    font-size: var(--fs-section);
+    font-weight: 600;
+    color: var(--red);
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    border-bottom: 1.5px solid var(--red);
+    padding-bottom: 1.5mm;
+    margin-bottom: 3.5mm;
+  }
+
+  /* ─────────────────── MAIN LAYOUT ─────────────────── */
+  /* Left col wide (caratteristiche + abilità)
+     Right col narrow (stato vitale stacked above doti) */
+  .main-layout {
+    display: grid;
+    grid-template-columns: 1fr 58mm;
+    gap: 6mm;
+    margin-bottom: 5mm;
+    align-items: start;
+  }
+
+  /* ─────────────────── CARATTERISTICHE ─────────────────── */
+  .caratteristiche { margin-bottom: 5mm; }
+
+  .stats-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 2.5mm;
+  }
+  .stat-box {
+    border: 1.5px solid var(--border);
+    background: var(--bg-panel);
+    text-align: center;
+    padding: 3.5mm 1mm 3mm;
+  }
+  .stat-name {
+    font-family: 'Share Tech Mono', monospace;
+    font-size: 6.5pt;
+    letter-spacing: 0.12em;
+    color: var(--muted);
+    text-transform: uppercase;
+  }
+  .stat-value {
+    font-family: 'Cinzel', serif;
+    font-size: var(--fs-stat);
+    font-weight: 700;
+    color: var(--dark);
+    line-height: 1.1;
+    margin-top: 1.5mm;
+  }
+
+  /* ─────────────────── ABILITÀ ─────────────────── */
+  /* 4 gruppi in griglia 2×2, con più respiro */
+  .abilita-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 3mm;
+  }
+  .abilita-group {
+    border: 1px solid var(--border-lt);
+    background: var(--bg-tint);
+    padding: 3mm 4mm;
+  }
+  .abilita-group-title {
+    font-family: 'Share Tech Mono', monospace;
+    font-size: 6.5pt;
+    letter-spacing: 0.2em;
+    color: var(--faint);
+    text-transform: uppercase;
+    border-bottom: 1px solid var(--border-lt);
+    padding-bottom: 2mm;
+    margin-bottom: 2.5mm;
+  }
+  .abilita-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 2mm 0;
+    border-bottom: 1px dotted var(--border-lt);
+  }
+  .abilita-row:last-child { border-bottom: none; }
+  .abilita-name {
+    font-family: 'Share Tech Mono', monospace;
+    font-size: var(--fs-body);
+    color: var(--mid);
+  }
+  .abilita-val {
+    font-family: 'Share Tech Mono', monospace;
+    font-size: var(--fs-val);
+    font-weight: 600;
+    color: var(--dark);
+    min-width: 7mm;
+    text-align: right;
+  }
+
+  /* ─────────────────── RIGHT COLUMN ─────────────────── */
+  .right-col {
+    display: flex;
+    flex-direction: column;
+    gap: 5mm;
+  }
+
+  /* ─────────────────── STATO VITALE ─────────────────── */
+  .stato-panel {
+    border: 1.5px solid var(--border);
+    background: var(--bg-tint);
+    padding: 4mm;
+  }
+  .stato-row { margin-bottom: 5mm; }
+  .stato-row:last-child { margin-bottom: 0; }
+  .stato-label-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    margin-bottom: 2.5mm;
+  }
+  .stato-name {
+    font-family: 'Cinzel', serif;
+    font-size: 9pt;
+    font-weight: 600;
+    color: var(--red);
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+  }
+  .stato-name.dadi { color: var(--purple); }
+  .stato-type {
+    font-family: 'Share Tech Mono', monospace;
+    font-size: 6pt;
+    letter-spacing: 0.2em;
+    color: var(--faint);
+    text-transform: uppercase;
+  }
+  .bubbles { display: flex; gap: 2.5mm; }
+  .bubble {
+    width: 6.5mm;
+    height: 6.5mm;
+    border-radius: 50%;
+    border: 1.5px solid var(--border);
+    background: var(--bg);
+  }
+
+  /* ─────────────────── DOTI & TALENTI ─────────────────── */
+  .doti-panel {
+    border: 1.5px solid var(--border);
+    background: var(--bg-tint);
+    padding: 4mm;
+  }
+  .doti-header {
+    display: grid;
+    grid-template-columns: 1fr 9mm 9mm;
+    gap: 1mm;
+    padding-bottom: 2mm;
+    border-bottom: 1px solid var(--border-lt);
+    margin-bottom: 1mm;
+  }
+  .doti-col-label {
+    font-family: 'Share Tech Mono', monospace;
+    font-size: 6.5pt;
+    letter-spacing: 0.12em;
+    color: var(--faint);
+    text-transform: uppercase;
+    text-align: right;
+  }
+  .doti-col-label:first-child { text-align: left; }
+  .doti-entry {
+    display: grid;
+    grid-template-columns: 1fr 9mm 9mm;
+    gap: 1mm;
+    padding: 2.5mm 0;
+    border-bottom: 1px dotted var(--border-lt);
+    align-items: center;
+  }
+  .doti-entry:last-child { border-bottom: none; }
+  .doti-entry-name {
+    font-family: 'Share Tech Mono', monospace;
+    font-size: var(--fs-body);
+    color: var(--muted);
+  }
+  .doti-entry-val {
+    font-family: 'Share Tech Mono', monospace;
+    font-size: var(--fs-body);
+    color: var(--faint);
+    text-align: right;
+  }
+
+  /* ─────────────────── BOTTOM: ZAINO + ARMI ─────────────────── */
+  .bottom-section {
+    display: flex;
+    flex-direction: column;
+    gap: 4mm;
+  }
+  .zaino-box {
+    border: 1.5px solid var(--border-lt);
+    background: var(--bg-tint);
+    padding: 3.5mm;
+    min-height: 24mm;
+  }
+  .zaino-placeholder {
+    font-family: 'Share Tech Mono', monospace;
+    font-size: var(--fs-body);
+    color: var(--border);
+    font-style: italic;
+  }
+  .armi-panel {
+    border: 1.5px solid var(--border);
+    background: var(--bg-tint);
+    padding: 4mm;
+  }
+  .armi-inner {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 5mm;
+  }
+  .arma-row {
+    padding: 2.5mm 0;
+    border-bottom: 1.5px solid var(--border-lt);
+  }
+  .arma-name {
+    font-family: 'Share Tech Mono', monospace;
+    font-size: var(--fs-body);
+    color: var(--muted);
+  }
+
+  /* ─────────────────── PRINT ─────────────────── */
+  @media print {
+    @page { size: A4; margin: 0; }
+    body { background: white; margin: 0; }
+    .page {
+      margin: 0;
+      padding: 9mm 10mm;
+      box-shadow: none;
+      width: 210mm;
+      min-height: 297mm;
+    }
+  }
+</style>
+</head>
+<body>
+<div class="page">
+
+  <!-- HEADER -->
+  <div class="header">
+    <h1>ORBIS ARCANA</h1>
+    <div class="subtitle">Scheda del Personaggio</div>
+  </div>
+
+  <!-- IDENTITY -->
+  <div class="identity-row">
+    <div class="field">
+      <div class="field-label">Nome PG</div>
+      <div class="field-value">· · ·</div>
+    </div>
+    <div class="field">
+      <div class="field-label">Alias / Nome in Codice</div>
+      <div class="field-value">· · ·</div>
+    </div>
+    <div class="field">
+      <div class="field-label">Professione</div>
+      <div class="field-value">· · ·</div>
+    </div>
+  </div>
+
+  <!-- MAIN LAYOUT -->
+  <div class="main-layout">
+
+    <!-- LEFT: Caratteristiche + Abilità -->
+    <div class="left-col">
+
+      <div class="caratteristiche">
+        <div class="section-title">Caratteristiche</div>
+        <div class="stats-grid">
+          <div class="stat-box">
+            <div class="stat-name">Forza</div>
+            <div class="stat-value">0</div>
+          </div>
+          <div class="stat-box">
+            <div class="stat-name">Agilità</div>
+            <div class="stat-value">0</div>
+          </div>
+          <div class="stat-box">
+            <div class="stat-name">Spirito</div>
+            <div class="stat-value">0</div>
+          </div>
+          <div class="stat-box">
+            <div class="stat-name">Ingegno</div>
+            <div class="stat-value">0</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="abilita">
+        <div class="section-title">Abilità</div>
+        <div class="abilita-grid">
+
+          <div class="abilita-group">
+            <div class="abilita-group-title">Forza</div>
+            <div class="abilita-row">
+              <span class="abilita-name">Prestanza</span>
+              <span class="abilita-val">0</span>
+            </div>
+            <div class="abilita-row">
+              <span class="abilita-name">Resistenza</span>
+              <span class="abilita-val">0</span>
+            </div>
+            <div class="abilita-row">
+              <span class="abilita-name">Rissa</span>
+              <span class="abilita-val">0</span>
+            </div>
+          </div>
+
+          <div class="abilita-group">
+            <div class="abilita-group-title">Agilità</div>
+            <div class="abilita-row">
+              <span class="abilita-name">Armi Da Fuoco</span>
+              <span class="abilita-val">0</span>
+            </div>
+            <div class="abilita-row">
+              <span class="abilita-name">Furtività</span>
+              <span class="abilita-val">0</span>
+            </div>
+            <div class="abilita-row">
+              <span class="abilita-name">Gioco Di Mano</span>
+              <span class="abilita-val">0</span>
+            </div>
+            <div class="abilita-row">
+              <span class="abilita-name">Movimento</span>
+              <span class="abilita-val">0</span>
+            </div>
+          </div>
+
+          <div class="abilita-group">
+            <div class="abilita-group-title">Spirito</div>
+            <div class="abilita-row">
+              <span class="abilita-name">Empatia</span>
+              <span class="abilita-val">0</span>
+            </div>
+            <div class="abilita-row">
+              <span class="abilita-name">Intuizione</span>
+              <span class="abilita-val">0</span>
+            </div>
+            <div class="abilita-row">
+              <span class="abilita-name">Percezione</span>
+              <span class="abilita-val">0</span>
+            </div>
+            <div class="abilita-row">
+              <span class="abilita-name">Rituali</span>
+              <span class="abilita-val">0</span>
+            </div>
+          </div>
+
+          <div class="abilita-group">
+            <div class="abilita-group-title">Ingegno</div>
+            <div class="abilita-row">
+              <span class="abilita-name">Medicina</span>
+              <span class="abilita-val">0</span>
+            </div>
+            <div class="abilita-row">
+              <span class="abilita-name">Ingegneria</span>
+              <span class="abilita-val">0</span>
+            </div>
+            <div class="abilita-row">
+              <span class="abilita-name">Investigazione</span>
+              <span class="abilita-val">0</span>
+            </div>
+            <div class="abilita-row">
+              <span class="abilita-name">Occultismo</span>
+              <span class="abilita-val">0</span>
+            </div>
+          </div>
+
+        </div>
+      </div>
+
+    </div><!-- /left-col -->
+
+    <!-- RIGHT: Stato Vitale + Doti & Talenti in colonna -->
+    <div class="right-col">
+
+      <div class="stato-panel">
+        <div class="section-title">Stato Vitale</div>
+        <div class="stato-row">
+          <div class="stato-label-row">
+            <span class="stato-name dadi">Dadi Maledetti</span>
+            <span class="stato-type">Corruzione</span>
+          </div>
+          <div class="bubbles">
+            <div class="bubble"></div><div class="bubble"></div>
+            <div class="bubble"></div><div class="bubble"></div>
+            <div class="bubble"></div><div class="bubble"></div>
+          </div>
+        </div>
+        <div class="stato-row">
+          <div class="stato-label-row">
+            <span class="stato-name">Salute</span>
+            <span class="stato-type">Fisico</span>
+          </div>
+          <div class="bubbles">
+            <div class="bubble"></div><div class="bubble"></div>
+            <div class="bubble"></div><div class="bubble"></div>
+            <div class="bubble"></div><div class="bubble"></div>
+          </div>
+        </div>
+        <div class="stato-row">
+          <div class="stato-label-row">
+            <span class="stato-name">Stress</span>
+            <span class="stato-type">Mentale</span>
+          </div>
+          <div class="bubbles">
+            <div class="bubble"></div><div class="bubble"></div>
+            <div class="bubble"></div><div class="bubble"></div>
+            <div class="bubble"></div><div class="bubble"></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="doti-panel">
+        <div class="section-title">Doti &amp; Talenti</div>
+        <div class="doti-header">
+          <span class="doti-col-label">Nome Dote / Descrizione</span>
+          <span class="doti-col-label">Liv.</span>
+          <span class="doti-col-label">Pag.</span>
+        </div>
+        <div class="doti-entry">
+          <span class="doti-entry-name">Nome dote...</span>
+          <span class="doti-entry-val">—</span><span class="doti-entry-val">—</span>
+        </div>
+        <div class="doti-entry">
+          <span class="doti-entry-name">Nome dote...</span>
+          <span class="doti-entry-val">—</span><span class="doti-entry-val">—</span>
+        </div>
+        <div class="doti-entry">
+          <span class="doti-entry-name">Nome dote...</span>
+          <span class="doti-entry-val">—</span><span class="doti-entry-val">—</span>
+        </div>
+        <div class="doti-entry">
+          <span class="doti-entry-name">Nome dote...</span>
+          <span class="doti-entry-val">—</span><span class="doti-entry-val">—</span>
+        </div>
+        <div class="doti-entry">
+          <span class="doti-entry-name">Nome dote...</span>
+          <span class="doti-entry-val">—</span><span class="doti-entry-val">—</span>
+        </div>
+      </div>
+
+    </div><!-- /right-col -->
+
+  </div><!-- /main-layout -->
+
+  <!-- BOTTOM: Zaino + Armi full width -->
+  <div class="bottom-section">
+
+    <div class="zaino">
+      <div class="section-title">Zaino</div>
+      <div class="zaino-box">
+        <span class="zaino-placeholder">Equipaggiamento, consumabili, oggetti chiave...</span>
+      </div>
+    </div>
+
+    <div class="armi-panel">
+      <div class="section-title">Armi</div>
+      <div class="armi-inner">
+        <div class="arma-row"><span class="arma-name">Arma 1 (Danno / Note)</span></div>
+        <div class="arma-row"><span class="arma-name">Arma 2 (Danno / Note)</span></div>
+        <div class="arma-row"><span class="arma-name">Arma 3 (Danno / Note)</span></div>
+      </div>
+    </div>
+
+  </div><!-- /bottom-section -->
+
+</div><!-- /page -->
+</body>
+</html>
